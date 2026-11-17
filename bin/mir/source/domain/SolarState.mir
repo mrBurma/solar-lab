@@ -1,0 +1,572 @@
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 1; @symbol_importdef<0> = [Toybox,1,7,13]; @symbol_importdef<1> = [Application,1,14,25]; ]
+import Toybox.Application;
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 2; @symbol_importdef<0> = [Toybox,2,7,13]; @symbol_importdef<1> = [Lang,2,14,18]; ]
+import Toybox.Lang;
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 3; @symbol_importdef<0> = [Toybox,3,7,13]; @symbol_importdef<1> = [System,3,14,20]; ]
+import Toybox.System;
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 4; @symbol_importdef<0> = [Toybox,4,7,13]; @symbol_importdef<1> = [Time,4,14,18]; @symbol_importdef<2> = [Gregorian,4,19,28]; ]
+import Toybox.Time.Gregorian;
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 5; @symbol_importdef<0> = [Toybox,5,7,13]; @symbol_importdef<1> = [Weather,5,14,21]; ]
+import Toybox.Weather;
+//! Current solar situation for the watch position: elevation, sunrise,
+//! sunset and the fraction of daylight that has passed.
+//!
+//! Location source, in order:
+//!   1. Weather.getCurrentConditions().observationLocationPosition
+//!      (cached by the watch from the phone, no network request from us);
+//!   2. the last known position saved in Application.Storage;
+//!   3. a default (Moscow) until the first real position arrives.
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 15; @symbol_classdef = [SolarState,15,6,16]; ]
+class SolarState {
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 15; ]
+    <init> {
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 21 8 ]
+        symbol [ DEFAULT_LAT %tmp.2 21 23 34 ];
+        %tmp.2 = getv ? :DEFAULT_LAT;
+        putv self :lat %tmp.2;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 22 8 ]
+        symbol [ DEFAULT_LON %tmp.4 22 23 34 ];
+        %tmp.4 = getv ? :DEFAULT_LON;
+        putv self :lon %tmp.4;
+    }
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 15; ]
+    static
+    <init> {
+    }
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 17; @position = 10; @symbol_constdef = [STORAGE_KEY,17,10,21]; ]
+    const STORAGE_KEY = "loc";
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 18; @position = 10; @symbol_constdef = [DEFAULT_LAT,18,10,21]; ]
+    const DEFAULT_LAT = 55.7558;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 19; @position = 10; @symbol_constdef = [DEFAULT_LON,19,10,21]; ]
+    const DEFAULT_LON = 37.6173;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 21; @position = 8; @symbol_vardef = [lat,21,8,11]; @symbol_type<0> = [Float,21,15,20]; ]
+    var lat as Float;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 22; @position = 8; @symbol_vardef = [lon,22,8,11]; @symbol_type<0> = [Float,22,15,20]; ]
+    var lon as Float;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 23; @position = 8; @symbol_vardef = [hasFix,23,8,14]; @symbol_type<0> = [Boolean,23,18,25]; ]
+    var hasFix as Boolean = false;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 25; @position = 8; @symbol_vardef = [elevation,25,8,17]; @symbol_type<0> = [Float,25,21,26]; ]
+    var elevation as Float = -6.0;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 26; @position = 8; @symbol_vardef = [riseMin,26,8,15]; @symbol_type<0> = [Float,26,19,24]; ]
+    var riseMin as Float or Null = null;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 27; @position = 8; @symbol_vardef = [setMin,27,8,14]; @symbol_type<0> = [Float,27,18,23]; ]
+    var setMin as Float or Null = null;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 28; @position = 8; @symbol_vardef = [dayFraction,28,8,19]; @symbol_type<0> = [Float,28,23,28]; ]
+    var dayFraction as Float = 0.0;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 30; @position = 16; @symbol_vardef = [_lastLocationCheck,30,16,34]; @symbol_type<0> = [Number,30,38,44]; ]
+    private
+    var _lastLocationCheck as Number = -100;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 32; @symbol_functiondef = [initialize,32,13,23]; ]
+    function initialize() as Void {
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_32_26_34_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 33 8 ]
+        %tmp.1 = self;
+        symbol [ loadStoredLocation %tmp.2 33 8 26 ];
+        %tmp.2 = getv function %tmp.1 :loadStoredLocation;
+        invoke %tmp.1 %tmp.2();
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_32_26_34_4_stop:
+    }
+    //! Recomputes everything. Call once per minute, never per frame.
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 37; @symbol_functiondef = [refresh,37,13,20]; @symbol_param<0> = [clock,37,21,26]; @symbol_param<0>_type<0> = [System,37,30,36]; @symbol_param<0>_type<1> = [ClockTime,37,37,46]; @symbol_param<1> = [date,37,48,52]; @symbol_param<1>_type<0> = [Gregorian,37,56,65]; @symbol_param<1>_type<1> = [Info,37,66,70]; ]
+    function refresh(clock as System.ClockTime, date as Gregorian.Info) as Void {
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 38 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_stop" ]
+        %minuteOfDay.1 = local;
+        symbol [ minuteOfDay %minuteOfDay.1 38 12 23 ];
+        %tmp.1 = lgetv %clock;
+        symbol [ clock %tmp.1 38 26 31 ];
+        symbol [ hour %tmp.2 38 32 36 ];
+        %tmp.2 = getv %tmp.1 :hour;
+        %tmp.3 = 60;
+        %tmp.4 = mul %tmp.2 %tmp.3;
+        %tmp.5 = lgetv %clock;
+        symbol [ clock %tmp.5 38 44 49 ];
+        symbol [ min %tmp.6 38 50 53 ];
+        %tmp.6 = getv %tmp.5 :min;
+        %tmp.7 = add %tmp.4 %tmp.6;
+        lputv %minuteOfDay.1 %tmp.7;
+        symbol [ minuteOfDay %minuteOfDay.1 38 12 23 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 39 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_39_8_42_8_if_stmt:
+        %tmp.8 = lgetv %minuteOfDay.1;
+        symbol [ minuteOfDay %tmp.8 39 13 24 ];
+        symbol [ _lastLocationCheck %tmp.10 39 27 45 ];
+        %tmp.10 = getv ? :_lastLocationCheck;
+        %tmp.11 = sub %tmp.8 %tmp.10;
+        symbol [ abs %tmp.12 39 47 50 ];
+        %tmp.12 = getv function %tmp.11 :abs;
+        %tmp.13 = invoke %tmp.11 %tmp.12();
+        %tmp.14 = 15;
+        %tmp.15 = gte %tmp.13 %tmp.14;
+        bf %tmp.15 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_39_8_42_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_39_8_42_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_39_60_42_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 40 12 ]
+        %tmp.16 = lgetv %minuteOfDay.1;
+        symbol [ minuteOfDay %tmp.16 40 33 44 ];
+        symbol [ _lastLocationCheck ? 40 12 30 ];
+        putv self :_lastLocationCheck %tmp.16;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 41 12 ]
+        %tmp.17 = self;
+        symbol [ updateLocation %tmp.18 41 12 26 ];
+        %tmp.18 = getv function %tmp.17 :updateLocation;
+        invoke %tmp.17 %tmp.18();
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_39_60_42_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_39_8_42_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_39_8_42_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 44 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_stop" ]
+        %tzHours.2 = local;
+        symbol [ tzHours %tzHours.2 44 12 19 ];
+        %tmp.19 = lgetv %clock;
+        symbol [ clock %tmp.19 44 22 27 ];
+        symbol [ timeZoneOffset %tmp.20 44 28 42 ];
+        %tmp.20 = getv %tmp.19 :timeZoneOffset;
+        %tmp.21 = 3600.0;
+        %tmp.22 = div %tmp.20 %tmp.21;
+        lputv %tzHours.2 %tmp.22;
+        symbol [ tzHours %tzHours.2 44 12 19 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 45 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_stop" ]
+        %doy.3 = local;
+        symbol [ doy %doy.3 45 12 15 ];
+        symbol [ DateUtil %tmp.24 45 18 26 ];
+        %tmp.24 = getv ? :DateUtil;
+        symbol [ dayOfYear %tmp.25 45 27 36 ];
+        %tmp.25 = getv function %tmp.24 :dayOfYear;
+        %tmp.26 = lgetv %date;
+        symbol [ date %tmp.26 45 37 41 ];
+        symbol [ year %tmp.27 45 42 46 ];
+        %tmp.27 = getv %tmp.26 :year;
+        %tmp.28 = as %tmp.27 Number;
+        symbol [ Number %tmp.28 45 50 56 ];
+        %tmp.29 = lgetv %date;
+        symbol [ date %tmp.29 45 58 62 ];
+        symbol [ month %tmp.30 45 63 68 ];
+        %tmp.30 = getv %tmp.29 :month;
+        %tmp.31 = as %tmp.30 Number;
+        symbol [ Number %tmp.31 45 72 78 ];
+        %tmp.32 = lgetv %date;
+        symbol [ date %tmp.32 45 80 84 ];
+        symbol [ day %tmp.33 45 85 88 ];
+        %tmp.33 = getv %tmp.32 :day;
+        %tmp.34 = as %tmp.33 Number;
+        symbol [ Number %tmp.34 45 92 98 ];
+        %tmp.35 = invoke %tmp.24 %tmp.25(%tmp.28, %tmp.31, %tmp.34);
+        lputv %doy.3 %tmp.35;
+        symbol [ doy %doy.3 45 12 15 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 46 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_stop" ]
+        %minutes.4 = local;
+        symbol [ minutes %minutes.4 46 12 19 ];
+        %tmp.36 = lgetv %minuteOfDay.1;
+        symbol [ minuteOfDay %tmp.36 46 22 33 ];
+        %tmp.37 = lgetv %clock;
+        symbol [ clock %tmp.37 46 36 41 ];
+        symbol [ sec %tmp.38 46 42 45 ];
+        %tmp.38 = getv %tmp.37 :sec;
+        %tmp.39 = 60.0;
+        %tmp.40 = div %tmp.38 %tmp.39;
+        %tmp.41 = add %tmp.36 %tmp.40;
+        lputv %minutes.4 %tmp.41;
+        symbol [ minutes %minutes.4 46 12 19 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 48 8 ]
+        symbol [ SolarMath %tmp.43 48 20 29 ];
+        %tmp.43 = getv ? :SolarMath;
+        symbol [ elevation %tmp.44 48 30 39 ];
+        %tmp.44 = getv function %tmp.43 :elevation;
+        symbol [ lat %tmp.46 48 40 43 ];
+        %tmp.46 = getv ? :lat;
+        symbol [ lon %tmp.48 48 45 48 ];
+        %tmp.48 = getv ? :lon;
+        %tmp.49 = lgetv %tzHours.2;
+        symbol [ tzHours %tmp.49 48 50 57 ];
+        symbol [ toFloat %tmp.50 48 58 65 ];
+        %tmp.50 = getv function %tmp.49 :toFloat;
+        %tmp.51 = invoke %tmp.49 %tmp.50();
+        %tmp.52 = lgetv %doy.3;
+        symbol [ doy %tmp.52 48 69 72 ];
+        %tmp.53 = lgetv %minutes.4;
+        symbol [ minutes %tmp.53 48 74 81 ];
+        symbol [ toFloat %tmp.54 48 82 89 ];
+        %tmp.54 = getv function %tmp.53 :toFloat;
+        %tmp.55 = invoke %tmp.53 %tmp.54();
+        %tmp.56 = invoke %tmp.43 %tmp.44(%tmp.46, %tmp.48, %tmp.51, %tmp.52, %tmp.55);
+        symbol [ elevation ? 48 8 17 ];
+        putv self :elevation %tmp.56;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 50 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_stop" ]
+        %times.5 = local;
+        symbol [ times %times.5 50 12 17 ];
+        symbol [ SolarMath %tmp.58 50 20 29 ];
+        %tmp.58 = getv ? :SolarMath;
+        symbol [ sunTimes %tmp.59 50 30 38 ];
+        %tmp.59 = getv function %tmp.58 :sunTimes;
+        symbol [ lat %tmp.61 50 39 42 ];
+        %tmp.61 = getv ? :lat;
+        symbol [ lon %tmp.63 50 44 47 ];
+        %tmp.63 = getv ? :lon;
+        %tmp.64 = lgetv %tzHours.2;
+        symbol [ tzHours %tmp.64 50 49 56 ];
+        symbol [ toFloat %tmp.65 50 57 64 ];
+        %tmp.65 = getv function %tmp.64 :toFloat;
+        %tmp.66 = invoke %tmp.64 %tmp.65();
+        %tmp.67 = lgetv %doy.3;
+        symbol [ doy %tmp.67 50 68 71 ];
+        %tmp.68 = invoke %tmp.58 %tmp.59(%tmp.61, %tmp.63, %tmp.66, %tmp.67);
+        lputv %times.5 %tmp.68;
+        symbol [ times %times.5 50 12 17 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 51 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_51_8_59_8_if_stmt:
+        %tmp.69 = lgetv %times.5;
+        symbol [ times %tmp.69 51 12 17 ];
+        %tmp.70 = null;
+        %tmp.71 = ne %tmp.69 %tmp.70;
+        bf %tmp.71 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_51_8_59_8_if_else_false;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_51_8_59_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_51_27_55_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 52 12 ]
+        %tmp.72 = lgetv %times.5;
+        symbol [ times %tmp.72 52 22 27 ];
+        %tmp.73 = as %tmp.72 { (!Null) };
+        %tmp.74 = 0;
+        %tmp.75 = agetv %tmp.73 %tmp.74;
+        symbol [ riseMin ? 52 12 19 ];
+        putv self :riseMin %tmp.75;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 53 12 ]
+        %tmp.76 = lgetv %times.5;
+        symbol [ times %tmp.76 53 21 26 ];
+        %tmp.77 = as %tmp.76 { (!Null) };
+        %tmp.78 = 1;
+        %tmp.79 = agetv %tmp.77 %tmp.78;
+        symbol [ setMin ? 53 12 18 ];
+        putv self :setMin %tmp.79;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 54 12 ]
+        %tmp.80 = lgetv %minutes.4;
+        symbol [ minutes %tmp.80 54 28 35 ];
+        %tmp.81 = lgetv %times.5;
+        symbol [ times %tmp.81 54 38 43 ];
+        %tmp.82 = as %tmp.81 { (!Null) };
+        %tmp.83 = 0;
+        %tmp.84 = agetv %tmp.82 %tmp.83;
+        %tmp.85 = sub %tmp.80 %tmp.84;
+        %tmp.86 = lgetv %times.5;
+        symbol [ times %tmp.86 54 51 56 ];
+        %tmp.87 = as %tmp.86 { (!Null) };
+        %tmp.88 = 1;
+        %tmp.89 = agetv %tmp.87 %tmp.88;
+        %tmp.90 = lgetv %times.5;
+        symbol [ times %tmp.90 54 62 67 ];
+        %tmp.91 = as %tmp.90 { (!Null) };
+        %tmp.92 = 0;
+        %tmp.93 = agetv %tmp.91 %tmp.92;
+        %tmp.94 = sub %tmp.89 %tmp.93;
+        %tmp.95 = div %tmp.85 %tmp.94;
+        symbol [ toFloat %tmp.96 54 73 80 ];
+        %tmp.96 = getv function %tmp.95 :toFloat;
+        %tmp.97 = invoke %tmp.95 %tmp.96();
+        symbol [ dayFraction ? 54 12 23 ];
+        putv self :dayFraction %tmp.97;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_51_27_55_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_51_8_59_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_51_8_59_8_if_else_false:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_55_15_59_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 56 12 ]
+        %tmp.98 = null;
+        symbol [ riseMin ? 56 12 19 ];
+        putv self :riseMin %tmp.98;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 57 12 ]
+        %tmp.99 = null;
+        symbol [ setMin ? 57 12 18 ];
+        putv self :setMin %tmp.99;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 58 12 ]
+        %tmp.100 = 0.5;
+        symbol [ dayFraction ? 58 12 23 ];
+        putv self :dayFraction %tmp.100;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_55_15_59_8_stop:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_51_8_59_8_if_end:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_37_80_60_4_stop:
+    }
+    //! Takes the position from the weather cache; saves it only when it moved,
+    //! to avoid needless flash writes.
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 64; @symbol_functiondef = [updateLocation,64,21,35]; ]
+    private
+    function updateLocation() as Void {
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 65 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_65_8_67_8_if_stmt:
+        symbol [ Toybox %tmp.2 65 14 20 ];
+        %tmp.2 = getv ? :Toybox;
+        %tmp.4 = const :Weather;
+        symbol [ Weather %tmp.4 65 26 33 const ];
+        %tmp.5 = canhazplz %tmp.2 %tmp.4;
+        %tmp.6 = not %tmp.5;
+        bf %tmp.6 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_65_8_67_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_65_8_67_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_65_36_67_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 66 12 ]
+        ret ?;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_65_36_67_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_65_8_67_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_65_8_67_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 68 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_stop" ]
+        %conditions.1 = local;
+        symbol [ conditions %conditions.1 68 12 22 ];
+        symbol [ Weather %tmp.7 68 25 32 ];
+        %tmp.7 = getm $.Toybox.Weather;
+        symbol [ getCurrentConditions %tmp.8 68 33 53 ];
+        %tmp.8 = getv function %tmp.7 :getCurrentConditions;
+        %tmp.9 = invoke %tmp.7 %tmp.8();
+        lputv %conditions.1 %tmp.9;
+        symbol [ conditions %conditions.1 68 12 22 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 69 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_69_8_71_8_if_stmt:
+        %tmp.10 = lgetv %conditions.1;
+        symbol [ conditions %tmp.10 69 12 22 ];
+        %tmp.11 = null;
+        %tmp.12 = eq %tmp.10 %tmp.11;
+        bf %tmp.12 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_69_8_71_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_69_8_71_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_69_32_71_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 70 12 ]
+        ret ?;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_69_32_71_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_69_8_71_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_69_8_71_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 72 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_stop" ]
+        %position.2 = local;
+        symbol [ position %position.2 72 12 20 ];
+        %tmp.13 = lgetv %conditions.1;
+        symbol [ conditions %tmp.13 72 23 33 ];
+        symbol [ observationLocationPosition %tmp.14 72 34 61 ];
+        %tmp.14 = getv %tmp.13 :observationLocationPosition;
+        lputv %position.2 %tmp.14;
+        symbol [ position %position.2 72 12 20 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 73 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_73_8_75_8_if_stmt:
+        %tmp.15 = lgetv %position.2;
+        symbol [ position %tmp.15 73 12 20 ];
+        %tmp.16 = null;
+        %tmp.17 = eq %tmp.15 %tmp.16;
+        bf %tmp.17 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_73_8_75_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_73_8_75_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_73_30_75_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 74 12 ]
+        ret ?;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_73_30_75_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_73_8_75_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_73_8_75_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 76 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_stop" ]
+        %deg.3 = local;
+        symbol [ deg %deg.3 76 12 15 ];
+        %tmp.18 = lgetv %position.2;
+        symbol [ position %tmp.18 76 18 26 ];
+        symbol [ toDegrees %tmp.19 76 27 36 ];
+        %tmp.19 = getv function %tmp.18 :toDegrees;
+        %tmp.20 = invoke %tmp.18 %tmp.19();
+        lputv %deg.3 %tmp.20;
+        symbol [ deg %deg.3 76 12 15 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 77 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_stop" ]
+        %newLat.4 = local;
+        symbol [ newLat %newLat.4 77 12 18 ];
+        %tmp.21 = lgetv %deg.3;
+        symbol [ deg %tmp.21 77 21 24 ];
+        %tmp.22 = 0;
+        %tmp.23 = agetv %tmp.21 %tmp.22;
+        symbol [ toFloat %tmp.24 77 28 35 ];
+        %tmp.24 = getv function %tmp.23 :toFloat;
+        %tmp.25 = invoke %tmp.23 %tmp.24();
+        lputv %newLat.4 %tmp.25;
+        symbol [ newLat %newLat.4 77 12 18 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 78 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_stop" ]
+        %newLon.5 = local;
+        symbol [ newLon %newLon.5 78 12 18 ];
+        %tmp.26 = lgetv %deg.3;
+        symbol [ deg %tmp.26 78 21 24 ];
+        %tmp.27 = 1;
+        %tmp.28 = agetv %tmp.26 %tmp.27;
+        symbol [ toFloat %tmp.29 78 28 35 ];
+        %tmp.29 = getv function %tmp.28 :toFloat;
+        %tmp.30 = invoke %tmp.28 %tmp.29();
+        lputv %newLon.5 %tmp.30;
+        symbol [ newLon %newLon.5 78 12 18 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 79 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_stop" ]
+        %moved.6 = local;
+        symbol [ moved %moved.6 79 12 17 ];
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_79_20_79_74_begin:
+        %tmp.31 = lgetv %newLat.4;
+        symbol [ newLat %tmp.31 79 21 27 ];
+        symbol [ lat %tmp.33 79 30 33 ];
+        %tmp.33 = getv ? :lat;
+        %tmp.34 = sub %tmp.31 %tmp.33;
+        symbol [ abs %tmp.35 79 35 38 ];
+        %tmp.35 = getv function %tmp.34 :abs;
+        %tmp.36 = invoke %tmp.34 %tmp.35();
+        %tmp.37 = 0.05;
+        %tmp.38 = gt %tmp.36 %tmp.37;
+        %tmp.39 = dup %tmp.38;
+        bt %tmp.39 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_79_51_79_74_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_79_51_79_74_false:
+        %tmp.40 = lgetv %newLon.5;
+        symbol [ newLon %tmp.40 79 52 58 ];
+        symbol [ lon %tmp.42 79 61 64 ];
+        %tmp.42 = getv ? :lon;
+        %tmp.43 = sub %tmp.40 %tmp.42;
+        symbol [ abs %tmp.44 79 66 69 ];
+        %tmp.44 = getv function %tmp.43 :abs;
+        %tmp.45 = invoke %tmp.43 %tmp.44();
+        %tmp.46 = 0.05;
+        %tmp.47 = gt %tmp.45 %tmp.46;
+        %tmp.48 = or %tmp.38 %tmp.47;
+        push %tmp.48;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_79_51_79_74_end:
+        %tmp.49 = phi [%tmp.39 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_79_20_79_74_begin] [%tmp.48 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_79_51_79_74_false] [%tmp.49 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_79_51_79_74_end];
+        lputv %moved.6 %tmp.49;
+        symbol [ moved %moved.6 79 12 17 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 80 8 ]
+        %tmp.50 = lgetv %newLat.4;
+        symbol [ newLat %tmp.50 80 14 20 ];
+        symbol [ lat ? 80 8 11 ];
+        putv self :lat %tmp.50;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 81 8 ]
+        %tmp.51 = lgetv %newLon.5;
+        symbol [ newLon %tmp.51 81 14 20 ];
+        symbol [ lon ? 81 8 11 ];
+        putv self :lon %tmp.51;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 82 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_8_84_8_if_stmt:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_12_82_22_begin:
+        %tmp.52 = lgetv %moved.6;
+        symbol [ moved %tmp.52 82 12 17 ];
+        bt %tmp.52 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_8_84_8_if_true;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_21_82_22_false:
+        symbol [ hasFix %tmp.54 82 22 28 ];
+        %tmp.54 = getv ? :hasFix;
+        %tmp.55 = not %tmp.54;
+        push %tmp.55;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_21_82_22_end:
+        %tmp.56 = phi [%tmp.52 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_12_82_22_begin] [%tmp.55 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_21_82_22_false] [%tmp.56 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_21_82_22_end];
+        bf %tmp.56 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_8_84_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_8_84_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_30_84_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 83 12 ]
+        symbol [ Application %tmp.57 83 12 23 ];
+        %tmp.57 = getm $.Toybox.Application;
+        symbol [ Storage %tmp.58 83 24 31 ];
+        %tmp.58 = getv %tmp.57 :Storage;
+        symbol [ setValue %tmp.59 83 32 40 ];
+        %tmp.59 = getv function %tmp.58 :setValue;
+        symbol [ STORAGE_KEY %tmp.61 83 41 52 ];
+        %tmp.61 = getv ? :STORAGE_KEY;
+        %tmp.62 = newa 2 Array<Application.Storage.ValueType>;
+        symbol [ Array %tmp.62 83 74 79 ];
+        symbol [ Application %tmp.62 83 80 91 ];
+        symbol [ Storage %tmp.62 83 92 99 ];
+        symbol [ ValueType %tmp.62 83 100 109 ];
+        %tmp.63 = lgetv %newLat.4;
+        symbol [ newLat %tmp.63 83 55 61 ];
+        %tmp.64 = dup %tmp.62;
+        %tmp.65 = aputv %tmp.64 0 %tmp.63;
+        %tmp.66 = lgetv %newLon.5;
+        symbol [ newLon %tmp.66 83 63 69 ];
+        %tmp.67 = dup %tmp.65;
+        %tmp.68 = aputv %tmp.67 1 %tmp.66;
+        invoke %tmp.58 %tmp.59(%tmp.61, %tmp.68);
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_30_84_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_8_84_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_82_8_84_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 85 8 ]
+        %tmp.69 = true;
+        symbol [ hasFix ? 85 8 14 ];
+        putv self :hasFix %tmp.69;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_64_46_86_4_stop:
+    }
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 88; @symbol_functiondef = [loadStoredLocation,88,21,39]; ]
+    private
+    function loadStoredLocation() as Void {
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_88_50_95_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 89 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_88_50_95_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_88_50_95_4_stop" ]
+        %saved.1 = local;
+        symbol [ saved %saved.1 89 12 17 ];
+        symbol [ Application %tmp.1 89 20 31 ];
+        %tmp.1 = getm $.Toybox.Application;
+        symbol [ Storage %tmp.2 89 32 39 ];
+        %tmp.2 = getv %tmp.1 :Storage;
+        symbol [ getValue %tmp.3 89 40 48 ];
+        %tmp.3 = getv function %tmp.2 :getValue;
+        symbol [ STORAGE_KEY %tmp.5 89 49 60 ];
+        %tmp.5 = getv ? :STORAGE_KEY;
+        %tmp.6 = invoke %tmp.2 %tmp.3(%tmp.5);
+        lputv %saved.1 %tmp.6;
+        symbol [ saved %saved.1 89 12 17 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 90 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_8_94_8_if_stmt:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_12_90_54_begin:
+        %tmp.7 = lgetv %saved.1;
+        symbol [ saved %tmp.7 90 12 17 ];
+        symbol [ Array %tmp.9 90 29 34 ];
+        %tmp.9 = getv ? :Array;
+        %tmp.10 = isa %tmp.7 %tmp.9;
+        bf %tmp.10 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_8_94_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_38_90_54_true:
+        %tmp.11 = lgetv %saved.1;
+        symbol [ saved %tmp.11 90 38 43 ];
+        %tmp.12 = as %tmp.11 { (Array) };
+        symbol [ size %tmp.13 90 44 48 ];
+        %tmp.13 = getv function %tmp.12 :size;
+        %tmp.14 = invoke %tmp.12 %tmp.13();
+        %tmp.15 = 2;
+        %tmp.16 = eq %tmp.14 %tmp.15;
+        push %tmp.16;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_38_90_54_end:
+        %tmp.17 = phi [%tmp.10 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_12_90_54_begin] [%tmp.16 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_38_90_54_true] [%tmp.17 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_38_90_54_end];
+        bf %tmp.17 @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_8_94_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_8_94_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_57_94_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 91 12 ]
+        %tmp.18 = lgetv %saved.1;
+        symbol [ saved %tmp.18 91 19 24 ];
+        %tmp.19 = as %tmp.18 { (Array) };
+        %tmp.20 = 0;
+        %tmp.21 = agetv %tmp.19 %tmp.20;
+        %tmp.22 = as %tmp.21 Numeric;
+        symbol [ Numeric %tmp.22 91 31 38 ];
+        symbol [ toFloat %tmp.23 91 40 47 ];
+        %tmp.23 = getv function %tmp.22 :toFloat;
+        %tmp.24 = invoke %tmp.22 %tmp.23();
+        symbol [ lat ? 91 12 15 ];
+        putv self :lat %tmp.24;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 92 12 ]
+        %tmp.25 = lgetv %saved.1;
+        symbol [ saved %tmp.25 92 19 24 ];
+        %tmp.26 = as %tmp.25 { (Array) };
+        %tmp.27 = 1;
+        %tmp.28 = agetv %tmp.26 %tmp.27;
+        %tmp.29 = as %tmp.28 Numeric;
+        symbol [ Numeric %tmp.29 92 31 38 ];
+        symbol [ toFloat %tmp.30 92 40 47 ];
+        %tmp.30 = getv function %tmp.29 :toFloat;
+        %tmp.31 = invoke %tmp.29 %tmp.30();
+        symbol [ lon ? 92 12 15 ];
+        putv self :lon %tmp.31;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc" 93 12 ]
+        %tmp.32 = true;
+        symbol [ hasFix ? 93 12 18 ];
+        putv self :hasFix %tmp.32;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_57_94_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_8_94_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_90_8_94_8_if_end:
+_Users_dageev_Documents_GARMIN_watch_source_domain_SolarState_mc_88_50_95_4_stop:
+    }
+}
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/SolarState.mc"; @line = 1; ]
+<init> {
+}

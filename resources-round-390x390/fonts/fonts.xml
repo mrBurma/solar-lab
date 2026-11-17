@@ -1,0 +1,15 @@
+<fonts>
+    <!-- JetBrains Mono (SIL OFL 1.1), rendered at device pixels for 390 px screens
+         by tools/make_fonts.py. Font height equals cap height, so
+         TEXT_JUSTIFY_VCENTER centres the visible glyphs. -->
+    <font id="TimeFont"  filename="time.fnt"  antialias="true" />
+    <font id="SecFont"   filename="sec.fnt"   antialias="true" />
+    <font id="ValueFont" filename="value.fnt" antialias="true" />
+    <font id="DateFont"  filename="date.fnt"  antialias="true" />
+    <font id="SmallFont" filename="small.fnt" antialias="true" />
+    <font id="TinyFont"  filename="tiny.fnt"  antialias="true" />
+    <font id="ActionFont" filename="action.fnt" antialias="true" />
+    <!-- Pictograms drawn by make_fonts.py: h heart, H heart outline, b battery,
+         d drop, l lungs, r hourglass, f steps, k flame, i bolt, s stress, x moon -->
+    <font id="IconFont"  filename="icons.fnt" antialias="true" />
+</fonts>

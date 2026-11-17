@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <!-- SOLAR·LAB launcher icon: sun on the horizon over dark hills (flat colours only) -->
+  <circle cx="30" cy="30" r="30" fill="#0E1A3A"/>
+  <rect x="0" y="26" width="60" height="16" fill="#7A3A44"/>
+  <rect x="0" y="34" width="60" height="8" fill="#C9603F"/>
+  <circle cx="30" cy="40" r="7" fill="#FFF2CC"/>
+  <path d="M0 42 Q12 36 22 41 T42 40 T60 41 V60 H0 Z" fill="#261A26"/>
+  <path d="M0 48 Q15 44 30 48 T60 47 V60 H0 Z" fill="#0D0D1A"/>
+  <line x1="8" y1="42" x2="52" y2="42" stroke="#00D5FF" stroke-width="1.2"/>
+</svg>

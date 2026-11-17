@@ -1,0 +1,677 @@
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc"; @line = 1; @symbol_importdef<0> = [Toybox,1,7,13]; @symbol_importdef<1> = [Graphics,1,14,22]; ]
+import Toybox.Graphics;
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc"; @line = 2; @symbol_importdef<0> = [Toybox,2,7,13]; @symbol_importdef<1> = [Lang,2,14,18]; ]
+import Toybox.Lang;
+//! Four metric slots: a vertical micro scale with zone notches on the left,
+//! then label, value and status word. Colour only where attention is needed.
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc"; @line = 6; @symbol_moduledef = [SlotRenderer,6,7,19]; ]
+module SlotRenderer {
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc"; @line = 6; ]
+    <init> {
+    }
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc"; @line = 8; @position = 10; @symbol_constdef = [SCALE_W,8,10,17]; ]
+    const SCALE_W = 3;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc"; @line = 10; @symbol_functiondef = [draw,10,13,17]; @symbol_param<0> = [dc,10,18,20]; @symbol_param<0>_type<0> = [Dc,10,24,26]; @symbol_param<1> = [l,10,28,29]; @symbol_param<1>_type<0> = [LayoutManager,10,33,46]; @symbol_param<2> = [slots,10,48,53]; @symbol_param<2>_type<0> = [Array,10,57,62]; @symbol_param<2>_type<1> = [SlotModel,10,63,72]; ]
+    function draw(dc as Dc, l as LayoutManager, slots as Array<SlotModel>) as Void {
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_10_83_14_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 11 8 ]
+        for @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_test @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_incr @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_init:
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_begin" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_end" ]
+        %i.1 = local;
+        symbol [ i %i.1 11 17 18 ];
+        %tmp.1 = 0;
+        lputv %i.1 %tmp.1;
+        symbol [ i %i.1 11 17 18 ];
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_test:
+        %tmp.2 = lgetv %i.1;
+        symbol [ i %tmp.2 11 24 25 ];
+        %tmp.3 = lgetv %slots;
+        symbol [ slots %tmp.3 11 28 33 ];
+        symbol [ size %tmp.4 11 34 38 ];
+        %tmp.4 = getv function %tmp.3 :size;
+        %tmp.5 = invoke %tmp.3 %tmp.4();
+        %tmp.6 = lt %tmp.2 %tmp.5;
+        bf %tmp.6 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_begin:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_47_13_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 12 12 ]
+        %tmp.7 = self;
+        symbol [ drawSlot %tmp.8 12 12 20 ];
+        %tmp.8 = getv function %tmp.7 :drawSlot;
+        %tmp.9 = lgetv %dc;
+        symbol [ dc %tmp.9 12 21 23 ];
+        %tmp.10 = lgetv %l;
+        symbol [ l %tmp.10 12 25 26 ];
+        %tmp.11 = lgetv %slots;
+        symbol [ slots %tmp.11 12 28 33 ];
+        %tmp.12 = lgetv %i.1;
+        symbol [ i %tmp.12 12 34 35 ];
+        %tmp.13 = agetv %tmp.11 %tmp.12;
+        %tmp.14 = lgetv %l;
+        symbol [ l %tmp.14 12 38 39 ];
+        symbol [ slotX0 %tmp.15 12 40 46 ];
+        %tmp.15 = getv %tmp.14 :slotX0;
+        %tmp.16 = lgetv %i.1;
+        symbol [ i %tmp.16 12 49 50 ];
+        %tmp.17 = lgetv %l;
+        symbol [ l %tmp.17 12 53 54 ];
+        symbol [ slotPitch %tmp.18 12 55 64 ];
+        %tmp.18 = getv %tmp.17 :slotPitch;
+        %tmp.19 = mul %tmp.16 %tmp.18;
+        %tmp.20 = add %tmp.15 %tmp.19;
+        invoke %tmp.7 %tmp.8(%tmp.9, %tmp.10, %tmp.13, %tmp.20);
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_47_13_8_stop:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_incr:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 11 ]
+        %tmp.23 = lgetv %i.1;
+        symbol [ i %tmp.23 11 42 43 ];
+        %tmp.24 = add %tmp.23 1;
+        lputv %i.1 %tmp.24;
+        symbol [ i %i.1 11 42 43 ];
+        goto @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_test;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_11_8_13_8_for_end:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_10_83_14_4_stop:
+    }
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc"; @line = 16; @symbol_functiondef = [drawSlot,16,13,21]; @symbol_param<0> = [dc,16,22,24]; @symbol_param<0>_type<0> = [Dc,16,28,30]; @symbol_param<1> = [l,16,32,33]; @symbol_param<1>_type<0> = [LayoutManager,16,37,50]; @symbol_param<2> = [s,16,52,53]; @symbol_param<2>_type<0> = [SlotModel,16,57,66]; @symbol_param<3> = [x,16,68,69]; @symbol_param<3>_type<0> = [Number,16,73,79]; ]
+    function drawSlot(dc as Dc, l as LayoutManager, s as SlotModel, x as Number) as Void {
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 17 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_stop" ]
+        %top.1 = local;
+        symbol [ top %top.1 17 12 15 ];
+        %tmp.1 = lgetv %l;
+        symbol [ l %tmp.1 17 18 19 ];
+        symbol [ slotsY %tmp.2 17 20 26 ];
+        %tmp.2 = getv %tmp.1 :slotsY;
+        lputv %top.1 %tmp.2;
+        symbol [ top %top.1 17 12 15 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 18 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_stop" ]
+        %h.2 = local;
+        symbol [ h %h.2 18 12 13 ];
+        %tmp.3 = lgetv %l;
+        symbol [ l %tmp.3 18 16 17 ];
+        symbol [ slotH %tmp.4 18 18 23 ];
+        %tmp.4 = getv %tmp.3 :slotH;
+        lputv %h.2 %tmp.4;
+        symbol [ h %h.2 18 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 19 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_stop" ]
+        %bottom.3 = local;
+        symbol [ bottom %bottom.3 19 12 18 ];
+        %tmp.5 = lgetv %top.1;
+        symbol [ top %tmp.5 19 21 24 ];
+        %tmp.6 = lgetv %h.2;
+        symbol [ h %tmp.6 19 27 28 ];
+        %tmp.7 = add %tmp.5 %tmp.6;
+        lputv %bottom.3 %tmp.7;
+        symbol [ bottom %bottom.3 19 12 18 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 22 8 ]
+        %tmp.8 = lgetv %dc;
+        symbol [ dc %tmp.8 22 8 10 ];
+        symbol [ setColor %tmp.9 22 11 19 ];
+        %tmp.9 = getv function %tmp.8 :setColor;
+        symbol [ Palette %tmp.11 22 20 27 ];
+        %tmp.11 = getv ? :Palette;
+        symbol [ SCALE %tmp.12 22 28 33 ];
+        %tmp.12 = getv %tmp.11 :SCALE;
+        symbol [ Graphics %tmp.13 22 35 43 ];
+        %tmp.13 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.14 22 44 61 ];
+        %tmp.14 = getv %tmp.13 :COLOR_TRANSPARENT;
+        invoke %tmp.8 %tmp.9(%tmp.12, %tmp.14);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 23 8 ]
+        %tmp.15 = lgetv %dc;
+        symbol [ dc %tmp.15 23 8 10 ];
+        symbol [ fillRectangle %tmp.16 23 11 24 ];
+        %tmp.16 = getv function %tmp.15 :fillRectangle;
+        %tmp.17 = lgetv %x;
+        symbol [ x %tmp.17 23 25 26 ];
+        %tmp.18 = lgetv %top.1;
+        symbol [ top %tmp.18 23 28 31 ];
+        symbol [ SCALE_W %tmp.20 23 33 40 ];
+        %tmp.20 = getv ? :SCALE_W;
+        %tmp.21 = lgetv %h.2;
+        symbol [ h %tmp.21 23 42 43 ];
+        invoke %tmp.15 %tmp.16(%tmp.17, %tmp.18, %tmp.20, %tmp.21);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 24 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_stop" ]
+        %f.4 = local;
+        symbol [ f %f.4 24 12 13 ];
+        %tmp.22 = lgetv %s;
+        symbol [ s %tmp.22 24 16 17 ];
+        symbol [ fraction %tmp.23 24 18 26 ];
+        %tmp.23 = getv %tmp.22 :fraction;
+        lputv %f.4 %tmp.23;
+        symbol [ f %f.4 24 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 25 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_8_32_8_if_stmt:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_12_25_43_begin:
+        %tmp.24 = lgetv %f.4;
+        symbol [ f %tmp.24 25 12 13 ];
+        %tmp.25 = null;
+        %tmp.26 = ne %tmp.24 %tmp.25;
+        bf %tmp.26 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_8_32_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_25_25_43_true:
+        %tmp.27 = lgetv %s;
+        symbol [ s %tmp.27 25 25 26 ];
+        symbol [ level %tmp.28 25 27 32 ];
+        %tmp.28 = getv %tmp.27 :level;
+        symbol [ Status %tmp.30 25 36 42 ];
+        %tmp.30 = getv ? :Status;
+        symbol [ NONE %tmp.31 25 43 47 ];
+        %tmp.31 = getv %tmp.30 :NONE;
+        %tmp.32 = ne %tmp.28 %tmp.31;
+        push %tmp.32;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_25_25_43_end:
+        %tmp.33 = phi [%tmp.26 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_12_25_43_begin] [%tmp.32 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_25_25_43_true] [%tmp.33 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_25_25_43_end];
+        bf %tmp.33 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_8_32_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_8_32_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_49_32_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 26 12 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_49_32_8_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_49_32_8_stop" ]
+        %fh.5 = local;
+        symbol [ fh %fh.5 26 16 18 ];
+        %tmp.34 = lgetv %f.4;
+        symbol [ f %tmp.34 26 22 23 ];
+        %tmp.35 = as %tmp.34 { (!Null) };
+        %tmp.36 = lgetv %h.2;
+        symbol [ h %tmp.36 26 26 27 ];
+        %tmp.37 = mul %tmp.35 %tmp.36;
+        %tmp.38 = 0.5;
+        %tmp.39 = add %tmp.37 %tmp.38;
+        symbol [ toNumber %tmp.40 26 35 43 ];
+        %tmp.40 = getv function %tmp.39 :toNumber;
+        %tmp.41 = invoke %tmp.39 %tmp.40();
+        lputv %fh.5 %tmp.41;
+        symbol [ fh %fh.5 26 16 18 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 27 12 ]
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_27_12_29_12_if_stmt:
+        %tmp.42 = lgetv %fh.5;
+        symbol [ fh %tmp.42 27 16 18 ];
+        %tmp.43 = 1;
+        %tmp.44 = lt %tmp.42 %tmp.43;
+        bf %tmp.44 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_27_12_29_12_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_27_12_29_12_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_27_24_29_12_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 28 16 ]
+        %tmp.45 = 1;
+        lputv %fh.5 %tmp.45;
+        symbol [ fh %fh.5 28 16 18 ];
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_27_24_29_12_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_27_12_29_12_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_27_12_29_12_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 30 12 ]
+        %tmp.46 = lgetv %dc;
+        symbol [ dc %tmp.46 30 12 14 ];
+        symbol [ setColor %tmp.47 30 15 23 ];
+        %tmp.47 = getv function %tmp.46 :setColor;
+        %tmp.48 = self;
+        symbol [ fillColor %tmp.49 30 24 33 ];
+        %tmp.49 = getv function %tmp.48 :fillColor;
+        %tmp.50 = lgetv %s;
+        symbol [ s %tmp.50 30 34 35 ];
+        symbol [ level %tmp.51 30 36 41 ];
+        %tmp.51 = getv %tmp.50 :level;
+        %tmp.52 = invoke %tmp.48 %tmp.49(%tmp.51);
+        symbol [ Graphics %tmp.53 30 44 52 ];
+        %tmp.53 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.54 30 53 70 ];
+        %tmp.54 = getv %tmp.53 :COLOR_TRANSPARENT;
+        invoke %tmp.46 %tmp.47(%tmp.52, %tmp.54);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 31 12 ]
+        %tmp.55 = lgetv %dc;
+        symbol [ dc %tmp.55 31 12 14 ];
+        symbol [ fillRectangle %tmp.56 31 15 28 ];
+        %tmp.56 = getv function %tmp.55 :fillRectangle;
+        %tmp.57 = lgetv %x;
+        symbol [ x %tmp.57 31 29 30 ];
+        %tmp.58 = lgetv %bottom.3;
+        symbol [ bottom %tmp.58 31 32 38 ];
+        %tmp.59 = lgetv %fh.5;
+        symbol [ fh %tmp.59 31 41 43 ];
+        %tmp.60 = sub %tmp.58 %tmp.59;
+        symbol [ SCALE_W %tmp.62 31 45 52 ];
+        %tmp.62 = getv ? :SCALE_W;
+        %tmp.63 = lgetv %fh.5;
+        symbol [ fh %tmp.63 31 54 56 ];
+        invoke %tmp.55 %tmp.56(%tmp.57, %tmp.60, %tmp.62, %tmp.63);
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_49_32_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_8_32_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_25_8_32_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 33 8 ]
+        %tmp.64 = lgetv %dc;
+        symbol [ dc %tmp.64 33 8 10 ];
+        symbol [ setColor %tmp.65 33 11 19 ];
+        %tmp.65 = getv function %tmp.64 :setColor;
+        symbol [ Palette %tmp.67 33 20 27 ];
+        %tmp.67 = getv ? :Palette;
+        symbol [ BG %tmp.68 33 28 30 ];
+        %tmp.68 = getv %tmp.67 :BG;
+        symbol [ Graphics %tmp.69 33 32 40 ];
+        %tmp.69 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.70 33 41 58 ];
+        %tmp.70 = getv %tmp.69 :COLOR_TRANSPARENT;
+        invoke %tmp.64 %tmp.65(%tmp.68, %tmp.70);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 34 8 ]
+        for @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_test @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_incr @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_init:
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_begin" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_end" ]
+        %k.6 = local;
+        symbol [ k %k.6 34 17 18 ];
+        %tmp.71 = 0;
+        lputv %k.6 %tmp.71;
+        symbol [ k %k.6 34 17 18 ];
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_test:
+        %tmp.72 = lgetv %k.6;
+        symbol [ k %tmp.72 34 24 25 ];
+        %tmp.73 = lgetv %s;
+        symbol [ s %tmp.73 34 28 29 ];
+        symbol [ ticks %tmp.74 34 30 35 ];
+        %tmp.74 = getv %tmp.73 :ticks;
+        symbol [ size %tmp.75 34 36 40 ];
+        %tmp.75 = getv function %tmp.74 :size;
+        %tmp.76 = invoke %tmp.74 %tmp.75();
+        %tmp.77 = lt %tmp.72 %tmp.76;
+        bf %tmp.77 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_begin:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_49_39_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 35 12 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_49_39_8_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_49_39_8_stop" ]
+        %y.7 = local;
+        symbol [ y %y.7 35 16 17 ];
+        %tmp.78 = lgetv %bottom.3;
+        symbol [ bottom %tmp.78 35 20 26 ];
+        %tmp.79 = lgetv %s;
+        symbol [ s %tmp.79 35 30 31 ];
+        symbol [ ticks %tmp.80 35 32 37 ];
+        %tmp.80 = getv %tmp.79 :ticks;
+        %tmp.81 = lgetv %k.6;
+        symbol [ k %tmp.81 35 38 39 ];
+        %tmp.82 = agetv %tmp.80 %tmp.81;
+        %tmp.83 = lgetv %h.2;
+        symbol [ h %tmp.83 35 43 44 ];
+        %tmp.84 = mul %tmp.82 %tmp.83;
+        %tmp.85 = 0.5;
+        %tmp.86 = add %tmp.84 %tmp.85;
+        symbol [ toNumber %tmp.87 35 52 60 ];
+        %tmp.87 = getv function %tmp.86 :toNumber;
+        %tmp.88 = invoke %tmp.86 %tmp.87();
+        %tmp.89 = sub %tmp.78 %tmp.88;
+        lputv %y.7 %tmp.89;
+        symbol [ y %y.7 35 16 17 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 36 12 ]
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_12_38_12_if_stmt:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_16_36_31_begin:
+        %tmp.90 = lgetv %y.7;
+        symbol [ y %tmp.90 36 16 17 ];
+        %tmp.91 = lgetv %top.1;
+        symbol [ top %tmp.91 36 20 23 ];
+        %tmp.92 = gt %tmp.90 %tmp.91;
+        bf %tmp.92 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_12_38_12_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_27_36_31_true:
+        %tmp.93 = lgetv %y.7;
+        symbol [ y %tmp.93 36 27 28 ];
+        %tmp.94 = lgetv %bottom.3;
+        symbol [ bottom %tmp.94 36 31 37 ];
+        %tmp.95 = lt %tmp.93 %tmp.94;
+        push %tmp.95;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_27_36_31_end:
+        %tmp.96 = phi [%tmp.92 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_16_36_31_begin] [%tmp.95 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_27_36_31_true] [%tmp.96 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_27_36_31_end];
+        bf %tmp.96 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_12_38_12_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_12_38_12_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_39_38_12_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 37 16 ]
+        %tmp.97 = lgetv %dc;
+        symbol [ dc %tmp.97 37 16 18 ];
+        symbol [ fillRectangle %tmp.98 37 19 32 ];
+        %tmp.98 = getv function %tmp.97 :fillRectangle;
+        %tmp.99 = lgetv %x;
+        symbol [ x %tmp.99 37 33 34 ];
+        %tmp.100 = lgetv %y.7;
+        symbol [ y %tmp.100 37 36 37 ];
+        symbol [ SCALE_W %tmp.102 37 39 46 ];
+        %tmp.102 = getv ? :SCALE_W;
+        %tmp.103 = 1;
+        invoke %tmp.97 %tmp.98(%tmp.99, %tmp.100, %tmp.102, %tmp.103);
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_39_38_12_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_12_38_12_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_36_12_38_12_if_end:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_49_39_8_stop:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_incr:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 34 ]
+        %tmp.106 = lgetv %k.6;
+        symbol [ k %tmp.106 34 44 45 ];
+        %tmp.107 = add %tmp.106 1;
+        lputv %k.6 %tmp.107;
+        symbol [ k %k.6 34 44 45 ];
+        goto @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_test;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_34_8_39_8_for_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 41 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_stop" ]
+        %tx.8 = local;
+        symbol [ tx %tx.8 41 12 14 ];
+        %tmp.108 = lgetv %x;
+        symbol [ x %tmp.108 41 17 18 ];
+        %tmp.109 = lgetv %l;
+        symbol [ l %tmp.109 41 21 22 ];
+        symbol [ slotTextDx %tmp.110 41 23 33 ];
+        %tmp.110 = getv %tmp.109 :slotTextDx;
+        %tmp.111 = add %tmp.108 %tmp.110;
+        lputv %tx.8 %tmp.111;
+        symbol [ tx %tx.8 41 12 14 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 42 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_stop" ]
+        %just.9 = local;
+        symbol [ just %just.9 42 12 16 ];
+        symbol [ Graphics %tmp.112 42 19 27 ];
+        %tmp.112 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_LEFT %tmp.113 42 28 45 ];
+        %tmp.113 = getv %tmp.112 :TEXT_JUSTIFY_LEFT;
+        symbol [ Graphics %tmp.114 42 48 56 ];
+        %tmp.114 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.115 42 57 77 ];
+        %tmp.115 = getv %tmp.114 :TEXT_JUSTIFY_VCENTER;
+        %tmp.116 = bitor %tmp.113 %tmp.115;
+        lputv %just.9 %tmp.116;
+        symbol [ just %just.9 42 12 16 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 43 8 ]
+        %tmp.117 = lgetv %dc;
+        symbol [ dc %tmp.117 43 8 10 ];
+        symbol [ setColor %tmp.118 43 11 19 ];
+        %tmp.118 = getv function %tmp.117 :setColor;
+        symbol [ Palette %tmp.120 43 20 27 ];
+        %tmp.120 = getv ? :Palette;
+        symbol [ SOFT %tmp.121 43 28 32 ];
+        %tmp.121 = getv %tmp.120 :SOFT;
+        symbol [ Graphics %tmp.122 43 34 42 ];
+        %tmp.122 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.123 43 43 60 ];
+        %tmp.123 = getv %tmp.122 :COLOR_TRANSPARENT;
+        invoke %tmp.117 %tmp.118(%tmp.121, %tmp.123);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 44 8 ]
+        %tmp.124 = lgetv %dc;
+        symbol [ dc %tmp.124 44 8 10 ];
+        symbol [ drawText %tmp.125 44 11 19 ];
+        %tmp.125 = getv function %tmp.124 :drawText;
+        %tmp.126 = lgetv %tx.8;
+        symbol [ tx %tmp.126 44 20 22 ];
+        %tmp.127 = lgetv %top.1;
+        symbol [ top %tmp.127 44 24 27 ];
+        %tmp.128 = lgetv %l;
+        symbol [ l %tmp.128 44 30 31 ];
+        symbol [ slotLabelDy %tmp.129 44 32 43 ];
+        %tmp.129 = getv %tmp.128 :slotLabelDy;
+        %tmp.130 = add %tmp.127 %tmp.129;
+        %tmp.131 = lgetv %l;
+        symbol [ l %tmp.131 44 45 46 ];
+        symbol [ tinyFont %tmp.132 44 47 55 ];
+        %tmp.132 = getv %tmp.131 :tinyFont;
+        %tmp.133 = lgetv %s;
+        symbol [ s %tmp.133 44 57 58 ];
+        symbol [ label %tmp.134 44 59 64 ];
+        %tmp.134 = getv %tmp.133 :label;
+        %tmp.135 = lgetv %just.9;
+        symbol [ just %tmp.135 44 66 70 ];
+        invoke %tmp.124 %tmp.125(%tmp.126, %tmp.130, %tmp.132, %tmp.134, %tmp.135);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 46 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_stop" ]
+        %noData.10 = local;
+        symbol [ noData %noData.10 46 12 18 ];
+        %tmp.136 = lgetv %s;
+        symbol [ s %tmp.136 46 22 23 ];
+        symbol [ level %tmp.137 46 24 29 ];
+        %tmp.137 = getv %tmp.136 :level;
+        symbol [ Status %tmp.139 46 33 39 ];
+        %tmp.139 = getv ? :Status;
+        symbol [ NONE %tmp.140 46 40 44 ];
+        %tmp.140 = getv %tmp.139 :NONE;
+        %tmp.141 = eq %tmp.137 %tmp.140;
+        lputv %noData.10 %tmp.141;
+        symbol [ noData %noData.10 46 12 18 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 47 8 ]
+        %tmp.142 = lgetv %dc;
+        symbol [ dc %tmp.142 47 8 10 ];
+        symbol [ setColor %tmp.143 47 11 19 ];
+        %tmp.143 = getv function %tmp.142 :setColor;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_begin:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_21_47_33_begin:
+        %tmp.144 = lgetv %noData.10;
+        symbol [ noData %tmp.144 47 21 27 ];
+        bt %tmp.144 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_true;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_31_47_33_false:
+        %tmp.145 = lgetv %s;
+        symbol [ s %tmp.145 47 31 32 ];
+        symbol [ stale %tmp.146 47 33 38 ];
+        %tmp.146 = getv %tmp.145 :stale;
+        push %tmp.146;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_31_47_33_end:
+        %tmp.147 = phi [%tmp.144 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_21_47_33_begin] [%tmp.146 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_31_47_33_false] [%tmp.147 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_31_47_33_end];
+        bf %tmp.147 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_else_false;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_true:
+        symbol [ Palette %tmp.149 47 42 49 ];
+        %tmp.149 = getv ? :Palette;
+        symbol [ MUTED %tmp.150 47 50 55 ];
+        %tmp.150 = getv %tmp.149 :MUTED;
+        push %tmp.150;
+        goto @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_else_false:
+        symbol [ Palette %tmp.152 47 58 65 ];
+        %tmp.152 = getv ? :Palette;
+        symbol [ FG %tmp.153 47 66 68 ];
+        %tmp.153 = getv %tmp.152 :FG;
+        push %tmp.153;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_end:
+        %tmp.154 = phi [%tmp.147 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_begin] [%tmp.150 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_true] [%tmp.153 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_else_false] [%tmp.154 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_47_20_47_66_end];
+        symbol [ Graphics %tmp.155 47 70 78 ];
+        %tmp.155 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.156 47 79 96 ];
+        %tmp.156 = getv %tmp.155 :COLOR_TRANSPARENT;
+        invoke %tmp.142 %tmp.143(%tmp.154, %tmp.156);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 48 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_stop" ]
+        %vy.11 = local;
+        symbol [ vy %vy.11 48 12 14 ];
+        %tmp.157 = lgetv %top.1;
+        symbol [ top %tmp.157 48 17 20 ];
+        %tmp.158 = lgetv %l;
+        symbol [ l %tmp.158 48 23 24 ];
+        symbol [ slotValueDy %tmp.159 48 25 36 ];
+        %tmp.159 = getv %tmp.158 :slotValueDy;
+        %tmp.160 = add %tmp.157 %tmp.159;
+        lputv %vy.11 %tmp.160;
+        symbol [ vy %vy.11 48 12 14 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 49 8 ]
+        %tmp.161 = lgetv %dc;
+        symbol [ dc %tmp.161 49 8 10 ];
+        symbol [ drawText %tmp.162 49 11 19 ];
+        %tmp.162 = getv function %tmp.161 :drawText;
+        %tmp.163 = lgetv %tx.8;
+        symbol [ tx %tmp.163 49 20 22 ];
+        %tmp.164 = lgetv %vy.11;
+        symbol [ vy %tmp.164 49 24 26 ];
+        %tmp.165 = lgetv %l;
+        symbol [ l %tmp.165 49 28 29 ];
+        symbol [ valueFont %tmp.166 49 30 39 ];
+        %tmp.166 = getv %tmp.165 :valueFont;
+        %tmp.167 = lgetv %s;
+        symbol [ s %tmp.167 49 41 42 ];
+        symbol [ value %tmp.168 49 43 48 ];
+        %tmp.168 = getv %tmp.167 :value;
+        %tmp.169 = lgetv %just.9;
+        symbol [ just %tmp.169 49 50 54 ];
+        invoke %tmp.161 %tmp.162(%tmp.163, %tmp.164, %tmp.166, %tmp.168, %tmp.169);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 50 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_8_54_8_if_stmt:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_12_50_25_begin:
+        %tmp.170 = lgetv %s;
+        symbol [ s %tmp.170 50 12 13 ];
+        symbol [ stale %tmp.171 50 14 19 ];
+        %tmp.171 = getv %tmp.170 :stale;
+        bt %tmp.171 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_8_54_8_if_true;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_23_50_25_false:
+        %tmp.172 = lgetv %s;
+        symbol [ s %tmp.172 50 23 24 ];
+        symbol [ anomaly %tmp.173 50 25 32 ];
+        %tmp.173 = getv %tmp.172 :anomaly;
+        push %tmp.173;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_23_50_25_end:
+        %tmp.174 = phi [%tmp.171 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_12_50_25_begin] [%tmp.173 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_23_50_25_false] [%tmp.174 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_23_50_25_end];
+        bf %tmp.174 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_8_54_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_8_54_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_34_54_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 51 12 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_34_54_8_start" "_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_34_54_8_stop" ]
+        %vw.12 = local;
+        symbol [ vw %vw.12 51 16 18 ];
+        %tmp.175 = lgetv %dc;
+        symbol [ dc %tmp.175 51 21 23 ];
+        symbol [ getTextWidthInPixels %tmp.176 51 24 44 ];
+        %tmp.176 = getv function %tmp.175 :getTextWidthInPixels;
+        %tmp.177 = lgetv %s;
+        symbol [ s %tmp.177 51 45 46 ];
+        symbol [ value %tmp.178 51 47 52 ];
+        %tmp.178 = getv %tmp.177 :value;
+        %tmp.179 = lgetv %l;
+        symbol [ l %tmp.179 51 54 55 ];
+        symbol [ valueFont %tmp.180 51 56 65 ];
+        %tmp.180 = getv %tmp.179 :valueFont;
+        %tmp.181 = invoke %tmp.175 %tmp.176(%tmp.178, %tmp.180);
+        lputv %vw.12 %tmp.181;
+        symbol [ vw %vw.12 51 16 18 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 52 12 ]
+        %tmp.182 = lgetv %dc;
+        symbol [ dc %tmp.182 52 12 14 ];
+        symbol [ setColor %tmp.183 52 15 23 ];
+        %tmp.183 = getv function %tmp.182 :setColor;
+        symbol [ Palette %tmp.185 52 24 31 ];
+        %tmp.185 = getv ? :Palette;
+        symbol [ WARN %tmp.186 52 32 36 ];
+        %tmp.186 = getv %tmp.185 :WARN;
+        symbol [ Graphics %tmp.187 52 38 46 ];
+        %tmp.187 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.188 52 47 64 ];
+        %tmp.188 = getv %tmp.187 :COLOR_TRANSPARENT;
+        invoke %tmp.182 %tmp.183(%tmp.186, %tmp.188);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 53 12 ]
+        %tmp.189 = lgetv %dc;
+        symbol [ dc %tmp.189 53 12 14 ];
+        symbol [ fillCircle %tmp.190 53 15 25 ];
+        %tmp.190 = getv function %tmp.189 :fillCircle;
+        %tmp.191 = lgetv %tx.8;
+        symbol [ tx %tmp.191 53 26 28 ];
+        %tmp.192 = lgetv %vw.12;
+        symbol [ vw %tmp.192 53 31 33 ];
+        %tmp.193 = add %tmp.191 %tmp.192;
+        %tmp.194 = lgetv %l;
+        symbol [ l %tmp.194 53 36 37 ];
+        symbol [ px %tmp.195 53 38 40 ];
+        %tmp.195 = getv function %tmp.194 :px;
+        %tmp.196 = 4;
+        %tmp.197 = invoke %tmp.194 %tmp.195(%tmp.196);
+        %tmp.198 = add %tmp.193 %tmp.197;
+        %tmp.199 = lgetv %vy.11;
+        symbol [ vy %tmp.199 53 45 47 ];
+        %tmp.200 = lgetv %l;
+        symbol [ l %tmp.200 53 50 51 ];
+        symbol [ px %tmp.201 53 52 54 ];
+        %tmp.201 = getv function %tmp.200 :px;
+        %tmp.202 = 5;
+        %tmp.203 = invoke %tmp.200 %tmp.201(%tmp.202);
+        %tmp.204 = sub %tmp.199 %tmp.203;
+        %tmp.205 = lgetv %l;
+        symbol [ l %tmp.205 53 59 60 ];
+        symbol [ px %tmp.206 53 61 63 ];
+        %tmp.206 = getv function %tmp.205 :px;
+        %tmp.207 = 2;
+        %tmp.208 = invoke %tmp.205 %tmp.206(%tmp.207);
+        invoke %tmp.189 %tmp.190(%tmp.198, %tmp.204, %tmp.208);
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_34_54_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_8_54_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_50_8_54_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 56 8 ]
+        %tmp.209 = lgetv %dc;
+        symbol [ dc %tmp.209 56 8 10 ];
+        symbol [ setColor %tmp.210 56 11 19 ];
+        %tmp.210 = getv function %tmp.209 :setColor;
+        symbol [ Palette %tmp.212 56 20 27 ];
+        %tmp.212 = getv ? :Palette;
+        symbol [ levelColor %tmp.213 56 28 38 ];
+        %tmp.213 = getv function %tmp.212 :levelColor;
+        %tmp.214 = lgetv %s;
+        symbol [ s %tmp.214 56 39 40 ];
+        symbol [ level %tmp.215 56 41 46 ];
+        %tmp.215 = getv %tmp.214 :level;
+        %tmp.216 = invoke %tmp.212 %tmp.213(%tmp.215);
+        symbol [ Graphics %tmp.217 56 49 57 ];
+        %tmp.217 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.218 56 58 75 ];
+        %tmp.218 = getv %tmp.217 :COLOR_TRANSPARENT;
+        invoke %tmp.209 %tmp.210(%tmp.216, %tmp.218);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 57 8 ]
+        %tmp.219 = lgetv %dc;
+        symbol [ dc %tmp.219 57 8 10 ];
+        symbol [ drawText %tmp.220 57 11 19 ];
+        %tmp.220 = getv function %tmp.219 :drawText;
+        %tmp.221 = lgetv %tx.8;
+        symbol [ tx %tmp.221 57 20 22 ];
+        %tmp.222 = lgetv %top.1;
+        symbol [ top %tmp.222 57 24 27 ];
+        %tmp.223 = lgetv %l;
+        symbol [ l %tmp.223 57 30 31 ];
+        symbol [ slotStatusDy %tmp.224 57 32 44 ];
+        %tmp.224 = getv %tmp.223 :slotStatusDy;
+        %tmp.225 = add %tmp.222 %tmp.224;
+        %tmp.226 = lgetv %l;
+        symbol [ l %tmp.226 57 46 47 ];
+        symbol [ tinyFont %tmp.227 57 48 56 ];
+        %tmp.227 = getv %tmp.226 :tinyFont;
+        %tmp.228 = lgetv %s;
+        symbol [ s %tmp.228 57 58 59 ];
+        symbol [ status %tmp.229 57 60 66 ];
+        %tmp.229 = getv %tmp.228 :status;
+        %tmp.230 = lgetv %just.9;
+        symbol [ just %tmp.230 57 68 72 ];
+        invoke %tmp.219 %tmp.220(%tmp.221, %tmp.225, %tmp.227, %tmp.229, %tmp.230);
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_16_89_58_4_stop:
+    }
+    //! Scale fill: white for a normal value would be too heavy, so soft grey.
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc"; @line = 61; @symbol_functiondef = [fillColor,61,13,22]; @symbol_param<0> = [level,61,23,28]; @symbol_param<0>_type<0> = [Number,61,32,38]; @symbol_return<0> = [Number,61,43,49]; ]
+    function fillColor(level as Number) as Number {
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_61_50_63_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc" 62 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_62_15_62_79_begin:
+        %tmp.1 = lgetv %level;
+        symbol [ level %tmp.1 62 16 21 ];
+        symbol [ Status %tmp.3 62 25 31 ];
+        %tmp.3 = getv ? :Status;
+        symbol [ NORM %tmp.4 62 32 36 ];
+        %tmp.4 = getv %tmp.3 :NORM;
+        %tmp.5 = eq %tmp.1 %tmp.4;
+        bf %tmp.5 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_62_15_62_79_else_false;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_62_15_62_79_true:
+        symbol [ Palette %tmp.7 62 40 47 ];
+        %tmp.7 = getv ? :Palette;
+        symbol [ SOFT %tmp.8 62 48 52 ];
+        %tmp.8 = getv %tmp.7 :SOFT;
+        push %tmp.8;
+        goto @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_62_15_62_79_end;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_62_15_62_79_else_false:
+        symbol [ Palette %tmp.10 62 55 62 ];
+        %tmp.10 = getv ? :Palette;
+        symbol [ levelColor %tmp.11 62 63 73 ];
+        %tmp.11 = getv function %tmp.10 :levelColor;
+        %tmp.12 = lgetv %level;
+        symbol [ level %tmp.12 62 74 79 ];
+        %tmp.13 = invoke %tmp.10 %tmp.11(%tmp.12);
+        push %tmp.13;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_62_15_62_79_end:
+        %tmp.14 = phi [%tmp.5 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_62_15_62_79_begin] [%tmp.8 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_62_15_62_79_true] [%tmp.13 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_62_15_62_79_else_false] [%tmp.14 @_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_62_15_62_79_end];
+        ret %tmp.14;
+_Users_dageev_Documents_GARMIN_watch_source_render_SlotRenderer_mc_61_50_63_4_stop:
+    }
+}
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/SlotRenderer.mc"; @line = 1; ]
+<init> {
+}

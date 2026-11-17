@@ -1,0 +1,988 @@
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 1; @symbol_importdef<0> = [Toybox,1,7,13]; @symbol_importdef<1> = [Lang,1,14,18]; ]
+import Toybox.Lang;
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 2; @symbol_importdef<0> = [Toybox,2,7,13]; @symbol_importdef<1> = [System,2,14,20]; ]
+import Toybox.System;
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 3; @symbol_importdef<0> = [Toybox,3,7,13]; @symbol_importdef<1> = [Time,3,14,18]; @symbol_importdef<2> = [Gregorian,3,19,28]; ]
+import Toybox.Time.Gregorian;
+//! Date and time formatting in a compact technical style: "SAT 07 NOV  W45".
+//! Labels are fixed English capitals so the instrument look does not depend
+//! on the watch language; localisation can be added through string resources.
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 8; @symbol_moduledef = [DateUtil,8,7,15]; ]
+module DateUtil {
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 8; ]
+    <init> {
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 10 10 ]
+        %tmp.1 = newa 7 Array<String>;
+        symbol [ Array %tmp.1 10 70 75 ];
+        symbol [ String %tmp.1 10 76 82 ];
+        %tmp.2 = "SUN";
+        %tmp.3 = dup %tmp.1;
+        %tmp.4 = aputv %tmp.3 0 %tmp.2;
+        %tmp.5 = "MON";
+        %tmp.6 = dup %tmp.4;
+        %tmp.7 = aputv %tmp.6 1 %tmp.5;
+        %tmp.8 = "TUE";
+        %tmp.9 = dup %tmp.7;
+        %tmp.10 = aputv %tmp.9 2 %tmp.8;
+        %tmp.11 = "WED";
+        %tmp.12 = dup %tmp.10;
+        %tmp.13 = aputv %tmp.12 3 %tmp.11;
+        %tmp.14 = "THU";
+        %tmp.15 = dup %tmp.13;
+        %tmp.16 = aputv %tmp.15 4 %tmp.14;
+        %tmp.17 = "FRI";
+        %tmp.18 = dup %tmp.16;
+        %tmp.19 = aputv %tmp.18 5 %tmp.17;
+        %tmp.20 = "SAT";
+        %tmp.21 = dup %tmp.19;
+        %tmp.22 = aputv %tmp.21 6 %tmp.20;
+        putv self :DAYS %tmp.22;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 11 10 ]
+        %tmp.23 = newa 12 Array<String>;
+        symbol [ Array %tmp.23 12 65 70 ];
+        symbol [ String %tmp.23 12 71 77 ];
+        %tmp.24 = "JAN";
+        %tmp.25 = dup %tmp.23;
+        %tmp.26 = aputv %tmp.25 0 %tmp.24;
+        %tmp.27 = "FEB";
+        %tmp.28 = dup %tmp.26;
+        %tmp.29 = aputv %tmp.28 1 %tmp.27;
+        %tmp.30 = "MAR";
+        %tmp.31 = dup %tmp.29;
+        %tmp.32 = aputv %tmp.31 2 %tmp.30;
+        %tmp.33 = "APR";
+        %tmp.34 = dup %tmp.32;
+        %tmp.35 = aputv %tmp.34 3 %tmp.33;
+        %tmp.36 = "MAY";
+        %tmp.37 = dup %tmp.35;
+        %tmp.38 = aputv %tmp.37 4 %tmp.36;
+        %tmp.39 = "JUN";
+        %tmp.40 = dup %tmp.38;
+        %tmp.41 = aputv %tmp.40 5 %tmp.39;
+        %tmp.42 = "JUL";
+        %tmp.43 = dup %tmp.41;
+        %tmp.44 = aputv %tmp.43 6 %tmp.42;
+        %tmp.45 = "AUG";
+        %tmp.46 = dup %tmp.44;
+        %tmp.47 = aputv %tmp.46 7 %tmp.45;
+        %tmp.48 = "SEP";
+        %tmp.49 = dup %tmp.47;
+        %tmp.50 = aputv %tmp.49 8 %tmp.48;
+        %tmp.51 = "OCT";
+        %tmp.52 = dup %tmp.50;
+        %tmp.53 = aputv %tmp.52 9 %tmp.51;
+        %tmp.54 = "NOV";
+        %tmp.55 = dup %tmp.53;
+        %tmp.56 = aputv %tmp.55 10 %tmp.54;
+        %tmp.57 = "DEC";
+        %tmp.58 = dup %tmp.56;
+        %tmp.59 = aputv %tmp.58 11 %tmp.57;
+        putv self :MONTHS %tmp.59;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 15 10 ]
+        %tmp.60 = newa 12 Array<Number>;
+        symbol [ Array %tmp.60 15 61 66 ];
+        symbol [ Number %tmp.60 15 67 73 ];
+        %tmp.61 = 0;
+        %tmp.62 = dup %tmp.60;
+        %tmp.63 = aputv %tmp.62 0 %tmp.61;
+        %tmp.64 = 3;
+        %tmp.65 = dup %tmp.63;
+        %tmp.66 = aputv %tmp.65 1 %tmp.64;
+        %tmp.67 = 2;
+        %tmp.68 = dup %tmp.66;
+        %tmp.69 = aputv %tmp.68 2 %tmp.67;
+        %tmp.70 = 5;
+        %tmp.71 = dup %tmp.69;
+        %tmp.72 = aputv %tmp.71 3 %tmp.70;
+        %tmp.73 = 0;
+        %tmp.74 = dup %tmp.72;
+        %tmp.75 = aputv %tmp.74 4 %tmp.73;
+        %tmp.76 = 3;
+        %tmp.77 = dup %tmp.75;
+        %tmp.78 = aputv %tmp.77 5 %tmp.76;
+        %tmp.79 = 5;
+        %tmp.80 = dup %tmp.78;
+        %tmp.81 = aputv %tmp.80 6 %tmp.79;
+        %tmp.82 = 1;
+        %tmp.83 = dup %tmp.81;
+        %tmp.84 = aputv %tmp.83 7 %tmp.82;
+        %tmp.85 = 4;
+        %tmp.86 = dup %tmp.84;
+        %tmp.87 = aputv %tmp.86 8 %tmp.85;
+        %tmp.88 = 6;
+        %tmp.89 = dup %tmp.87;
+        %tmp.90 = aputv %tmp.89 9 %tmp.88;
+        %tmp.91 = 2;
+        %tmp.92 = dup %tmp.90;
+        %tmp.93 = aputv %tmp.92 10 %tmp.91;
+        %tmp.94 = 4;
+        %tmp.95 = dup %tmp.93;
+        %tmp.96 = aputv %tmp.95 11 %tmp.94;
+        putv self :SAKAMOTO %tmp.96;
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 16 10 ]
+        %tmp.97 = newa 12 Array<Number>;
+        symbol [ Array %tmp.97 16 80 85 ];
+        symbol [ Number %tmp.97 16 86 92 ];
+        %tmp.98 = 0;
+        %tmp.99 = dup %tmp.97;
+        %tmp.100 = aputv %tmp.99 0 %tmp.98;
+        %tmp.101 = 31;
+        %tmp.102 = dup %tmp.100;
+        %tmp.103 = aputv %tmp.102 1 %tmp.101;
+        %tmp.104 = 59;
+        %tmp.105 = dup %tmp.103;
+        %tmp.106 = aputv %tmp.105 2 %tmp.104;
+        %tmp.107 = 90;
+        %tmp.108 = dup %tmp.106;
+        %tmp.109 = aputv %tmp.108 3 %tmp.107;
+        %tmp.110 = 120;
+        %tmp.111 = dup %tmp.109;
+        %tmp.112 = aputv %tmp.111 4 %tmp.110;
+        %tmp.113 = 151;
+        %tmp.114 = dup %tmp.112;
+        %tmp.115 = aputv %tmp.114 5 %tmp.113;
+        %tmp.116 = 181;
+        %tmp.117 = dup %tmp.115;
+        %tmp.118 = aputv %tmp.117 6 %tmp.116;
+        %tmp.119 = 212;
+        %tmp.120 = dup %tmp.118;
+        %tmp.121 = aputv %tmp.120 7 %tmp.119;
+        %tmp.122 = 243;
+        %tmp.123 = dup %tmp.121;
+        %tmp.124 = aputv %tmp.123 8 %tmp.122;
+        %tmp.125 = 273;
+        %tmp.126 = dup %tmp.124;
+        %tmp.127 = aputv %tmp.126 9 %tmp.125;
+        %tmp.128 = 304;
+        %tmp.129 = dup %tmp.127;
+        %tmp.130 = aputv %tmp.129 10 %tmp.128;
+        %tmp.131 = 334;
+        %tmp.132 = dup %tmp.130;
+        %tmp.133 = aputv %tmp.132 11 %tmp.131;
+        putv self :CUM_DAYS %tmp.133;
+    }
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 10; @position = 10; @symbol_constdef = [DAYS,10,10,14]; ]
+    const DAYS;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 11; @position = 10; @symbol_constdef = [MONTHS,11,10,16]; ]
+    const MONTHS;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 15; @position = 10; @symbol_constdef = [SAKAMOTO,15,10,18]; ]
+    const SAKAMOTO;
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 16; @position = 10; @symbol_constdef = [CUM_DAYS,16,10,18]; ]
+    const CUM_DAYS;
+    //! "07:58" in 24-hour mode, "7:58" in 12-hour mode (follows the watch setting).
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 19; @symbol_functiondef = [timeString,19,13,23]; @symbol_param<0> = [clock,19,24,29]; @symbol_param<0>_type<0> = [System,19,33,39]; @symbol_param<0>_type<1> = [ClockTime,19,40,49]; @symbol_return<0> = [String,19,54,60]; ]
+    function timeString(clock as System.ClockTime) as String {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_19_61_29_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 20 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_19_61_29_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_19_61_29_4_stop" ]
+        %hour.1 = local;
+        symbol [ hour %hour.1 20 12 16 ];
+        %tmp.1 = lgetv %clock;
+        symbol [ clock %tmp.1 20 19 24 ];
+        symbol [ hour %tmp.2 20 25 29 ];
+        %tmp.2 = getv %tmp.1 :hour;
+        lputv %hour.1 %tmp.2;
+        symbol [ hour %hour.1 20 12 16 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 21 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_21_8_27_8_if_stmt:
+        symbol [ System %tmp.3 21 13 19 ];
+        %tmp.3 = getm $.Toybox.System;
+        symbol [ getDeviceSettings %tmp.4 21 20 37 ];
+        %tmp.4 = getv function %tmp.3 :getDeviceSettings;
+        %tmp.5 = invoke %tmp.3 %tmp.4();
+        symbol [ is24Hour %tmp.6 21 40 48 ];
+        %tmp.6 = getv %tmp.5 :is24Hour;
+        %tmp.7 = not %tmp.6;
+        bf %tmp.7 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_21_8_27_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_21_8_27_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_21_50_27_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 22 12 ]
+        %tmp.8 = lgetv %hour.1;
+        symbol [ hour %tmp.8 22 19 23 ];
+        %tmp.9 = 12;
+        %tmp.10 = mod %tmp.8 %tmp.9;
+        lputv %hour.1 %tmp.10;
+        symbol [ hour %hour.1 22 12 16 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 23 12 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_23_12_25_12_if_stmt:
+        %tmp.11 = lgetv %hour.1;
+        symbol [ hour %tmp.11 23 16 20 ];
+        %tmp.12 = 0;
+        %tmp.13 = eq %tmp.11 %tmp.12;
+        bf %tmp.13 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_23_12_25_12_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_23_12_25_12_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_23_27_25_12_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 24 16 ]
+        %tmp.14 = 12;
+        lputv %hour.1 %tmp.14;
+        symbol [ hour %hour.1 24 16 20 ];
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_23_27_25_12_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_23_12_25_12_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_23_12_25_12_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 26 12 ]
+        %tmp.15 = lgetv %hour.1;
+        symbol [ hour %tmp.15 26 19 23 ];
+        symbol [ format %tmp.16 26 24 30 ];
+        %tmp.16 = getv function %tmp.15 :format;
+        %tmp.17 = "%d";
+        %tmp.18 = invoke %tmp.15 %tmp.16(%tmp.17);
+        %tmp.19 = ":";
+        %tmp.20 = add %tmp.18 %tmp.19;
+        %tmp.21 = lgetv %clock;
+        symbol [ clock %tmp.21 26 45 50 ];
+        symbol [ min %tmp.22 26 51 54 ];
+        %tmp.22 = getv %tmp.21 :min;
+        symbol [ format %tmp.23 26 55 61 ];
+        %tmp.23 = getv function %tmp.22 :format;
+        %tmp.24 = "%02d";
+        %tmp.25 = invoke %tmp.22 %tmp.23(%tmp.24);
+        %tmp.26 = add %tmp.20 %tmp.25;
+        ret %tmp.26;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_21_50_27_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_21_8_27_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_21_8_27_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 28 8 ]
+        %tmp.27 = lgetv %hour.1;
+        symbol [ hour %tmp.27 28 15 19 ];
+        symbol [ format %tmp.28 28 20 26 ];
+        %tmp.28 = getv function %tmp.27 :format;
+        %tmp.29 = "%02d";
+        %tmp.30 = invoke %tmp.27 %tmp.28(%tmp.29);
+        %tmp.31 = ":";
+        %tmp.32 = add %tmp.30 %tmp.31;
+        %tmp.33 = lgetv %clock;
+        symbol [ clock %tmp.33 28 43 48 ];
+        symbol [ min %tmp.34 28 49 52 ];
+        %tmp.34 = getv %tmp.33 :min;
+        symbol [ format %tmp.35 28 53 59 ];
+        %tmp.35 = getv function %tmp.34 :format;
+        %tmp.36 = "%02d";
+        %tmp.37 = invoke %tmp.34 %tmp.35(%tmp.36);
+        %tmp.38 = add %tmp.32 %tmp.37;
+        ret %tmp.38;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_19_61_29_4_stop:
+    }
+    //! Hours only: "07" in 24-hour mode, "7" in 12-hour mode.
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 32; @symbol_functiondef = [hourString,32,13,23]; @symbol_param<0> = [clock,32,24,29]; @symbol_param<0>_type<0> = [System,32,33,39]; @symbol_param<0>_type<1> = [ClockTime,32,40,49]; @symbol_return<0> = [String,32,54,60]; ]
+    function hourString(clock as System.ClockTime) as String {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_32_61_42_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 33 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_32_61_42_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_32_61_42_4_stop" ]
+        %hour.1 = local;
+        symbol [ hour %hour.1 33 12 16 ];
+        %tmp.1 = lgetv %clock;
+        symbol [ clock %tmp.1 33 19 24 ];
+        symbol [ hour %tmp.2 33 25 29 ];
+        %tmp.2 = getv %tmp.1 :hour;
+        lputv %hour.1 %tmp.2;
+        symbol [ hour %hour.1 33 12 16 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 34 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_34_8_40_8_if_stmt:
+        symbol [ System %tmp.3 34 13 19 ];
+        %tmp.3 = getm $.Toybox.System;
+        symbol [ getDeviceSettings %tmp.4 34 20 37 ];
+        %tmp.4 = getv function %tmp.3 :getDeviceSettings;
+        %tmp.5 = invoke %tmp.3 %tmp.4();
+        symbol [ is24Hour %tmp.6 34 40 48 ];
+        %tmp.6 = getv %tmp.5 :is24Hour;
+        %tmp.7 = not %tmp.6;
+        bf %tmp.7 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_34_8_40_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_34_8_40_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_34_50_40_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 35 12 ]
+        %tmp.8 = lgetv %hour.1;
+        symbol [ hour %tmp.8 35 19 23 ];
+        %tmp.9 = 12;
+        %tmp.10 = mod %tmp.8 %tmp.9;
+        lputv %hour.1 %tmp.10;
+        symbol [ hour %hour.1 35 12 16 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 36 12 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_36_12_38_12_if_stmt:
+        %tmp.11 = lgetv %hour.1;
+        symbol [ hour %tmp.11 36 16 20 ];
+        %tmp.12 = 0;
+        %tmp.13 = eq %tmp.11 %tmp.12;
+        bf %tmp.13 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_36_12_38_12_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_36_12_38_12_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_36_27_38_12_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 37 16 ]
+        %tmp.14 = 12;
+        lputv %hour.1 %tmp.14;
+        symbol [ hour %hour.1 37 16 20 ];
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_36_27_38_12_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_36_12_38_12_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_36_12_38_12_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 39 12 ]
+        %tmp.15 = lgetv %hour.1;
+        symbol [ hour %tmp.15 39 19 23 ];
+        symbol [ format %tmp.16 39 24 30 ];
+        %tmp.16 = getv function %tmp.15 :format;
+        %tmp.17 = "%d";
+        %tmp.18 = invoke %tmp.15 %tmp.16(%tmp.17);
+        ret %tmp.18;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_34_50_40_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_34_8_40_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_34_8_40_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 41 8 ]
+        %tmp.19 = lgetv %hour.1;
+        symbol [ hour %tmp.19 41 15 19 ];
+        symbol [ format %tmp.20 41 20 26 ];
+        %tmp.20 = getv function %tmp.19 :format;
+        %tmp.21 = "%02d";
+        %tmp.22 = invoke %tmp.19 %tmp.20(%tmp.21);
+        ret %tmp.22;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_32_61_42_4_stop:
+    }
+    //! Date split for two-tone drawing: ["SAT ", "07", " NOV · W45"].
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 45; @symbol_functiondef = [dateParts,45,13,22]; @symbol_param<0> = [date,45,23,27]; @symbol_param<0>_type<0> = [Gregorian,45,31,40]; @symbol_param<0>_type<1> = [Info,45,41,45]; @symbol_return<0> = [Array,45,50,55]; @symbol_return<1> = [String,45,56,62]; ]
+    function dateParts(date as Gregorian.Info) as Array<String> {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_45_64_51_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 46 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_45_64_51_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_45_64_51_4_stop" ]
+        %y.1 = local;
+        symbol [ y %y.1 46 12 13 ];
+        %tmp.1 = lgetv %date;
+        symbol [ date %tmp.1 46 16 20 ];
+        symbol [ year %tmp.2 46 21 25 ];
+        %tmp.2 = getv %tmp.1 :year;
+        %tmp.3 = as %tmp.2 Number;
+        symbol [ Number %tmp.3 46 29 35 ];
+        lputv %y.1 %tmp.3;
+        symbol [ y %y.1 46 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 47 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_45_64_51_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_45_64_51_4_stop" ]
+        %m.2 = local;
+        symbol [ m %m.2 47 12 13 ];
+        %tmp.4 = lgetv %date;
+        symbol [ date %tmp.4 47 16 20 ];
+        symbol [ month %tmp.5 47 21 26 ];
+        %tmp.5 = getv %tmp.4 :month;
+        %tmp.6 = as %tmp.5 Number;
+        symbol [ Number %tmp.6 47 30 36 ];
+        lputv %m.2 %tmp.6;
+        symbol [ m %m.2 47 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 48 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_45_64_51_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_45_64_51_4_stop" ]
+        %d.3 = local;
+        symbol [ d %d.3 48 12 13 ];
+        %tmp.7 = lgetv %date;
+        symbol [ date %tmp.7 48 16 20 ];
+        symbol [ day %tmp.8 48 21 24 ];
+        %tmp.8 = getv %tmp.7 :day;
+        %tmp.9 = as %tmp.8 Number;
+        symbol [ Number %tmp.9 48 28 34 ];
+        lputv %d.3 %tmp.9;
+        symbol [ d %d.3 48 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 49 8 ]
+        %tmp.10 = newa 3 Array<String>;
+        symbol [ Array %tmp.10 50 81 86 ];
+        symbol [ String %tmp.10 50 87 93 ];
+        symbol [ DAYS %tmp.12 49 16 20 ];
+        %tmp.12 = getv ? :DAYS;
+        %tmp.13 = self;
+        symbol [ isoDayOfWeek %tmp.14 49 21 33 ];
+        %tmp.14 = getv function %tmp.13 :isoDayOfWeek;
+        %tmp.15 = lgetv %y.1;
+        symbol [ y %tmp.15 49 34 35 ];
+        %tmp.16 = lgetv %m.2;
+        symbol [ m %tmp.16 49 37 38 ];
+        %tmp.17 = lgetv %d.3;
+        symbol [ d %tmp.17 49 40 41 ];
+        %tmp.18 = invoke %tmp.13 %tmp.14(%tmp.15, %tmp.16, %tmp.17);
+        %tmp.19 = 7;
+        %tmp.20 = mod %tmp.18 %tmp.19;
+        %tmp.21 = agetv %tmp.12 %tmp.20;
+        %tmp.22 = " ";
+        %tmp.23 = add %tmp.21 %tmp.22;
+        %tmp.24 = dup %tmp.10;
+        %tmp.25 = aputv %tmp.24 0 %tmp.23;
+        %tmp.26 = lgetv %d.3;
+        symbol [ d %tmp.26 49 55 56 ];
+        symbol [ format %tmp.27 49 57 63 ];
+        %tmp.27 = getv function %tmp.26 :format;
+        %tmp.28 = "%02d";
+        %tmp.29 = invoke %tmp.26 %tmp.27(%tmp.28);
+        %tmp.30 = dup %tmp.25;
+        %tmp.31 = aputv %tmp.30 1 %tmp.29;
+        %tmp.32 = " ";
+        symbol [ MONTHS %tmp.34 50 22 28 ];
+        %tmp.34 = getv ? :MONTHS;
+        %tmp.35 = lgetv %m.2;
+        symbol [ m %tmp.35 50 29 30 ];
+        %tmp.36 = 1;
+        %tmp.37 = sub %tmp.35 %tmp.36;
+        %tmp.38 = agetv %tmp.34 %tmp.37;
+        %tmp.39 = add %tmp.32 %tmp.38;
+        %tmp.40 = " · W";
+        %tmp.41 = add %tmp.39 %tmp.40;
+        %tmp.42 = self;
+        symbol [ isoWeek %tmp.43 50 47 54 ];
+        %tmp.43 = getv function %tmp.42 :isoWeek;
+        %tmp.44 = lgetv %y.1;
+        symbol [ y %tmp.44 50 55 56 ];
+        %tmp.45 = lgetv %m.2;
+        symbol [ m %tmp.45 50 58 59 ];
+        %tmp.46 = lgetv %d.3;
+        symbol [ d %tmp.46 50 61 62 ];
+        %tmp.47 = invoke %tmp.42 %tmp.43(%tmp.44, %tmp.45, %tmp.46);
+        symbol [ format %tmp.48 50 64 70 ];
+        %tmp.48 = getv function %tmp.47 :format;
+        %tmp.49 = "%d";
+        %tmp.50 = invoke %tmp.47 %tmp.48(%tmp.49);
+        %tmp.51 = add %tmp.41 %tmp.50;
+        %tmp.52 = dup %tmp.31;
+        %tmp.53 = aputv %tmp.52 2 %tmp.51;
+        ret %tmp.53;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_45_64_51_4_stop:
+    }
+    //! "SAT 07 NOV  W45"
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 54; @symbol_functiondef = [dateLine,54,13,21]; @symbol_param<0> = [date,54,22,26]; @symbol_param<0>_type<0> = [Gregorian,54,30,39]; @symbol_param<0>_type<1> = [Info,54,40,44]; @symbol_return<0> = [String,54,49,55]; ]
+    function dateLine(date as Gregorian.Info) as String {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_54_56_61_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 55 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_54_56_61_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_54_56_61_4_stop" ]
+        %y.1 = local;
+        symbol [ y %y.1 55 12 13 ];
+        %tmp.1 = lgetv %date;
+        symbol [ date %tmp.1 55 16 20 ];
+        symbol [ year %tmp.2 55 21 25 ];
+        %tmp.2 = getv %tmp.1 :year;
+        %tmp.3 = as %tmp.2 Number;
+        symbol [ Number %tmp.3 55 29 35 ];
+        lputv %y.1 %tmp.3;
+        symbol [ y %y.1 55 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 56 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_54_56_61_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_54_56_61_4_stop" ]
+        %m.2 = local;
+        symbol [ m %m.2 56 12 13 ];
+        %tmp.4 = lgetv %date;
+        symbol [ date %tmp.4 56 16 20 ];
+        symbol [ month %tmp.5 56 21 26 ];
+        %tmp.5 = getv %tmp.4 :month;
+        %tmp.6 = as %tmp.5 Number;
+        symbol [ Number %tmp.6 56 30 36 ];
+        lputv %m.2 %tmp.6;
+        symbol [ m %m.2 56 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 57 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_54_56_61_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_54_56_61_4_stop" ]
+        %d.3 = local;
+        symbol [ d %d.3 57 12 13 ];
+        %tmp.7 = lgetv %date;
+        symbol [ date %tmp.7 57 16 20 ];
+        symbol [ day %tmp.8 57 21 24 ];
+        %tmp.8 = getv %tmp.7 :day;
+        %tmp.9 = as %tmp.8 Number;
+        symbol [ Number %tmp.9 57 28 34 ];
+        lputv %d.3 %tmp.9;
+        symbol [ d %d.3 57 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 58 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_54_56_61_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_54_56_61_4_stop" ]
+        %dow.4 = local;
+        symbol [ dow %dow.4 58 12 15 ];
+        %tmp.10 = self;
+        symbol [ isoDayOfWeek %tmp.11 58 18 30 ];
+        %tmp.11 = getv function %tmp.10 :isoDayOfWeek;
+        %tmp.12 = lgetv %y.1;
+        symbol [ y %tmp.12 58 31 32 ];
+        %tmp.13 = lgetv %m.2;
+        symbol [ m %tmp.13 58 34 35 ];
+        %tmp.14 = lgetv %d.3;
+        symbol [ d %tmp.14 58 37 38 ];
+        %tmp.15 = invoke %tmp.10 %tmp.11(%tmp.12, %tmp.13, %tmp.14);
+        lputv %dow.4 %tmp.15;
+        symbol [ dow %dow.4 58 12 15 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 59 8 ]
+        symbol [ DAYS %tmp.17 59 15 19 ];
+        %tmp.17 = getv ? :DAYS;
+        %tmp.18 = lgetv %dow.4;
+        symbol [ dow %tmp.18 59 20 23 ];
+        %tmp.19 = 7;
+        %tmp.20 = mod %tmp.18 %tmp.19;
+        %tmp.21 = agetv %tmp.17 %tmp.20;
+        %tmp.22 = " ";
+        %tmp.23 = add %tmp.21 %tmp.22;
+        %tmp.24 = lgetv %d.3;
+        symbol [ d %tmp.24 59 37 38 ];
+        symbol [ format %tmp.25 59 39 45 ];
+        %tmp.25 = getv function %tmp.24 :format;
+        %tmp.26 = "%02d";
+        %tmp.27 = invoke %tmp.24 %tmp.25(%tmp.26);
+        %tmp.28 = add %tmp.23 %tmp.27;
+        %tmp.29 = " ";
+        %tmp.30 = add %tmp.28 %tmp.29;
+        symbol [ MONTHS %tmp.32 59 62 68 ];
+        %tmp.32 = getv ? :MONTHS;
+        %tmp.33 = lgetv %m.2;
+        symbol [ m %tmp.33 59 69 70 ];
+        %tmp.34 = 1;
+        %tmp.35 = sub %tmp.33 %tmp.34;
+        %tmp.36 = agetv %tmp.32 %tmp.35;
+        %tmp.37 = add %tmp.30 %tmp.36;
+        %tmp.38 = "  W";
+        %tmp.39 = add %tmp.37 %tmp.38;
+        %tmp.40 = self;
+        symbol [ isoWeek %tmp.41 60 22 29 ];
+        %tmp.41 = getv function %tmp.40 :isoWeek;
+        %tmp.42 = lgetv %y.1;
+        symbol [ y %tmp.42 60 30 31 ];
+        %tmp.43 = lgetv %m.2;
+        symbol [ m %tmp.43 60 33 34 ];
+        %tmp.44 = lgetv %d.3;
+        symbol [ d %tmp.44 60 36 37 ];
+        %tmp.45 = invoke %tmp.40 %tmp.41(%tmp.42, %tmp.43, %tmp.44);
+        symbol [ format %tmp.46 60 39 45 ];
+        %tmp.46 = getv function %tmp.45 :format;
+        %tmp.47 = "%d";
+        %tmp.48 = invoke %tmp.45 %tmp.46(%tmp.47);
+        %tmp.49 = add %tmp.39 %tmp.48;
+        ret %tmp.49;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_54_56_61_4_stop:
+    }
+    //! "SAT 07" for the always-on screen.
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 64; @symbol_functiondef = [dateShort,64,13,22]; @symbol_param<0> = [date,64,23,27]; @symbol_param<0>_type<0> = [Gregorian,64,31,40]; @symbol_param<0>_type<1> = [Info,64,41,45]; @symbol_return<0> = [String,64,50,56]; ]
+    function dateShort(date as Gregorian.Info) as String {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_64_57_69_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 65 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_64_57_69_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_64_57_69_4_stop" ]
+        %y.1 = local;
+        symbol [ y %y.1 65 12 13 ];
+        %tmp.1 = lgetv %date;
+        symbol [ date %tmp.1 65 16 20 ];
+        symbol [ year %tmp.2 65 21 25 ];
+        %tmp.2 = getv %tmp.1 :year;
+        %tmp.3 = as %tmp.2 Number;
+        symbol [ Number %tmp.3 65 29 35 ];
+        lputv %y.1 %tmp.3;
+        symbol [ y %y.1 65 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 66 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_64_57_69_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_64_57_69_4_stop" ]
+        %m.2 = local;
+        symbol [ m %m.2 66 12 13 ];
+        %tmp.4 = lgetv %date;
+        symbol [ date %tmp.4 66 16 20 ];
+        symbol [ month %tmp.5 66 21 26 ];
+        %tmp.5 = getv %tmp.4 :month;
+        %tmp.6 = as %tmp.5 Number;
+        symbol [ Number %tmp.6 66 30 36 ];
+        lputv %m.2 %tmp.6;
+        symbol [ m %m.2 66 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 67 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_64_57_69_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_64_57_69_4_stop" ]
+        %d.3 = local;
+        symbol [ d %d.3 67 12 13 ];
+        %tmp.7 = lgetv %date;
+        symbol [ date %tmp.7 67 16 20 ];
+        symbol [ day %tmp.8 67 21 24 ];
+        %tmp.8 = getv %tmp.7 :day;
+        %tmp.9 = as %tmp.8 Number;
+        symbol [ Number %tmp.9 67 28 34 ];
+        lputv %d.3 %tmp.9;
+        symbol [ d %d.3 67 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 68 8 ]
+        symbol [ DAYS %tmp.11 68 15 19 ];
+        %tmp.11 = getv ? :DAYS;
+        %tmp.12 = self;
+        symbol [ isoDayOfWeek %tmp.13 68 20 32 ];
+        %tmp.13 = getv function %tmp.12 :isoDayOfWeek;
+        %tmp.14 = lgetv %y.1;
+        symbol [ y %tmp.14 68 33 34 ];
+        %tmp.15 = lgetv %m.2;
+        symbol [ m %tmp.15 68 36 37 ];
+        %tmp.16 = lgetv %d.3;
+        symbol [ d %tmp.16 68 39 40 ];
+        %tmp.17 = invoke %tmp.12 %tmp.13(%tmp.14, %tmp.15, %tmp.16);
+        %tmp.18 = 7;
+        %tmp.19 = mod %tmp.17 %tmp.18;
+        %tmp.20 = agetv %tmp.11 %tmp.19;
+        %tmp.21 = " ";
+        %tmp.22 = add %tmp.20 %tmp.21;
+        %tmp.23 = lgetv %d.3;
+        symbol [ d %tmp.23 68 55 56 ];
+        symbol [ format %tmp.24 68 57 63 ];
+        %tmp.24 = getv function %tmp.23 :format;
+        %tmp.25 = "%02d";
+        %tmp.26 = invoke %tmp.23 %tmp.24(%tmp.25);
+        %tmp.27 = add %tmp.22 %tmp.26;
+        ret %tmp.27;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_64_57_69_4_stop:
+    }
+    //! Local minutes after midnight (may be fractional) to "07:47", always 24-hour.
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 72; @symbol_functiondef = [minutesToHhmm,72,13,26]; @symbol_param<0> = [minutes,72,27,34]; @symbol_param<0>_type<0> = [Float,72,38,43]; @symbol_return<0> = [String,72,48,54]; ]
+    function minutesToHhmm(minutes as Float) as String {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_72_55_76_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 73 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_72_55_76_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_72_55_76_4_stop" ]
+        %m.1 = local;
+        symbol [ m %m.1 73 12 13 ];
+        %tmp.1 = lgetv %minutes;
+        symbol [ minutes %tmp.1 73 17 24 ];
+        %tmp.2 = 0.5;
+        %tmp.3 = add %tmp.1 %tmp.2;
+        symbol [ toNumber %tmp.4 73 32 40 ];
+        %tmp.4 = getv function %tmp.3 :toNumber;
+        %tmp.5 = invoke %tmp.3 %tmp.4();
+        lputv %m.1 %tmp.5;
+        symbol [ m %m.1 73 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 74 8 ]
+        %tmp.6 = lgetv %m.1;
+        symbol [ m %tmp.6 74 14 15 ];
+        %tmp.7 = 1440;
+        %tmp.8 = mod %tmp.6 %tmp.7;
+        %tmp.9 = 1440;
+        %tmp.10 = add %tmp.8 %tmp.9;
+        %tmp.11 = 1440;
+        %tmp.12 = mod %tmp.10 %tmp.11;
+        lputv %m.1 %tmp.12;
+        symbol [ m %m.1 74 8 9 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 75 8 ]
+        %tmp.13 = lgetv %m.1;
+        symbol [ m %tmp.13 75 16 17 ];
+        %tmp.14 = 60;
+        %tmp.15 = div %tmp.13 %tmp.14;
+        symbol [ format %tmp.16 75 24 30 ];
+        %tmp.16 = getv function %tmp.15 :format;
+        %tmp.17 = "%02d";
+        %tmp.18 = invoke %tmp.15 %tmp.16(%tmp.17);
+        %tmp.19 = ":";
+        %tmp.20 = add %tmp.18 %tmp.19;
+        %tmp.21 = lgetv %m.1;
+        symbol [ m %tmp.21 75 48 49 ];
+        %tmp.22 = 60;
+        %tmp.23 = mod %tmp.21 %tmp.22;
+        symbol [ format %tmp.24 75 56 62 ];
+        %tmp.24 = getv function %tmp.23 :format;
+        %tmp.25 = "%02d";
+        %tmp.26 = invoke %tmp.23 %tmp.24(%tmp.25);
+        %tmp.27 = add %tmp.20 %tmp.26;
+        ret %tmp.27;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_72_55_76_4_stop:
+    }
+    //! ISO 8601 day of week: Monday = 1 ... Sunday = 7 (Sakamoto's method).
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 79; @symbol_functiondef = [isoDayOfWeek,79,13,25]; @symbol_param<0> = [y,79,26,27]; @symbol_param<0>_type<0> = [Number,79,31,37]; @symbol_param<1> = [m,79,39,40]; @symbol_param<1>_type<0> = [Number,79,44,50]; @symbol_param<2> = [d,79,52,53]; @symbol_param<2>_type<0> = [Number,79,57,63]; @symbol_return<0> = [Number,79,68,74]; ]
+    function isoDayOfWeek(y as Number, m as Number, d as Number) as Number {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_79_75_83_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 80 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_79_75_83_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_79_75_83_4_stop" ]
+        %yy.1 = local;
+        symbol [ yy %yy.1 80 12 14 ];
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_80_17_80_35_begin:
+        %tmp.1 = lgetv %m;
+        symbol [ m %tmp.1 80 18 19 ];
+        %tmp.2 = 3;
+        %tmp.3 = lt %tmp.1 %tmp.2;
+        bf %tmp.3 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_80_17_80_35_else_false;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_80_17_80_35_true:
+        %tmp.4 = lgetv %y;
+        symbol [ y %tmp.4 80 27 28 ];
+        %tmp.5 = 1;
+        %tmp.6 = sub %tmp.4 %tmp.5;
+        push %tmp.6;
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_80_17_80_35_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_80_17_80_35_else_false:
+        %tmp.7 = lgetv %y;
+        symbol [ y %tmp.7 80 35 36 ];
+        push %tmp.7;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_80_17_80_35_end:
+        %tmp.8 = phi [%tmp.3 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_80_17_80_35_begin] [%tmp.6 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_80_17_80_35_true] [%tmp.7 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_80_17_80_35_else_false] [%tmp.8 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_80_17_80_35_end];
+        lputv %yy.1 %tmp.8;
+        symbol [ yy %yy.1 80 12 14 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 81 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_79_75_83_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_79_75_83_4_stop" ]
+        %w.2 = local;
+        symbol [ w %w.2 81 12 13 ];
+        %tmp.9 = lgetv %yy.1;
+        symbol [ yy %tmp.9 81 17 19 ];
+        %tmp.10 = lgetv %yy.1;
+        symbol [ yy %tmp.10 81 22 24 ];
+        %tmp.11 = 4;
+        %tmp.12 = div %tmp.10 %tmp.11;
+        %tmp.13 = add %tmp.9 %tmp.12;
+        %tmp.14 = lgetv %yy.1;
+        symbol [ yy %tmp.14 81 31 33 ];
+        %tmp.15 = 100;
+        %tmp.16 = div %tmp.14 %tmp.15;
+        %tmp.17 = sub %tmp.13 %tmp.16;
+        %tmp.18 = lgetv %yy.1;
+        symbol [ yy %tmp.18 81 42 44 ];
+        %tmp.19 = 400;
+        %tmp.20 = div %tmp.18 %tmp.19;
+        %tmp.21 = add %tmp.17 %tmp.20;
+        symbol [ SAKAMOTO %tmp.23 81 53 61 ];
+        %tmp.23 = getv ? :SAKAMOTO;
+        %tmp.24 = lgetv %m;
+        symbol [ m %tmp.24 81 62 63 ];
+        %tmp.25 = 1;
+        %tmp.26 = sub %tmp.24 %tmp.25;
+        %tmp.27 = agetv %tmp.23 %tmp.26;
+        %tmp.28 = add %tmp.21 %tmp.27;
+        %tmp.29 = lgetv %d;
+        symbol [ d %tmp.29 81 71 72 ];
+        %tmp.30 = add %tmp.28 %tmp.29;
+        %tmp.31 = 7;
+        %tmp.32 = mod %tmp.30 %tmp.31;
+        lputv %w.2 %tmp.32;
+        symbol [ w %w.2 81 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 82 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_82_15_82_30_begin:
+        %tmp.33 = lgetv %w.2;
+        symbol [ w %tmp.33 82 16 17 ];
+        %tmp.34 = 0;
+        %tmp.35 = eq %tmp.33 %tmp.34;
+        bf %tmp.35 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_82_15_82_30_else_false;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_82_15_82_30_true:
+        %tmp.36 = 7;
+        push %tmp.36;
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_82_15_82_30_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_82_15_82_30_else_false:
+        %tmp.37 = lgetv %w.2;
+        symbol [ w %tmp.37 82 30 31 ];
+        push %tmp.37;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_82_15_82_30_end:
+        %tmp.38 = phi [%tmp.35 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_82_15_82_30_begin] [%tmp.36 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_82_15_82_30_true] [%tmp.37 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_82_15_82_30_else_false] [%tmp.38 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_82_15_82_30_end];
+        ret %tmp.38;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_79_75_83_4_stop:
+    }
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 85; @symbol_functiondef = [isLeap,85,13,19]; @symbol_param<0> = [y,85,20,21]; @symbol_param<0>_type<0> = [Number,85,25,31]; @symbol_return<0> = [Boolean,85,36,43]; ]
+    function isLeap(y as Number) as Boolean {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_85_44_87_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 86 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_15_86_60_begin:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_16_86_41_begin:
+        %tmp.1 = lgetv %y;
+        symbol [ y %tmp.1 86 16 17 ];
+        %tmp.2 = 4;
+        %tmp.3 = mod %tmp.1 %tmp.2;
+        %tmp.4 = 0;
+        %tmp.5 = eq %tmp.3 %tmp.4;
+        %tmp.6 = dup %tmp.5;
+        bf %tmp.6 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_30_86_41_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_30_86_41_true:
+        %tmp.7 = lgetv %y;
+        symbol [ y %tmp.7 86 30 31 ];
+        %tmp.8 = 100;
+        %tmp.9 = mod %tmp.7 %tmp.8;
+        %tmp.10 = 0;
+        %tmp.11 = ne %tmp.9 %tmp.10;
+        %tmp.12 = and %tmp.5 %tmp.11;
+        push %tmp.12;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_30_86_41_end:
+        %tmp.13 = phi [%tmp.6 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_16_86_41_begin] [%tmp.12 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_30_86_41_true] [%tmp.13 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_30_86_41_end];
+        %tmp.14 = dup %tmp.13;
+        bt %tmp.14 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_47_86_60_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_47_86_60_false:
+        %tmp.15 = lgetv %y;
+        symbol [ y %tmp.15 86 48 49 ];
+        %tmp.16 = 400;
+        %tmp.17 = mod %tmp.15 %tmp.16;
+        %tmp.18 = 0;
+        %tmp.19 = eq %tmp.17 %tmp.18;
+        %tmp.20 = or %tmp.13 %tmp.19;
+        push %tmp.20;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_47_86_60_end:
+        %tmp.21 = phi [%tmp.14 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_15_86_60_begin] [%tmp.20 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_47_86_60_false] [%tmp.21 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_86_47_86_60_end];
+        ret %tmp.21;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_85_44_87_4_stop:
+    }
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 89; @symbol_functiondef = [dayOfYear,89,13,22]; @symbol_param<0> = [y,89,23,24]; @symbol_param<0>_type<0> = [Number,89,28,34]; @symbol_param<1> = [m,89,36,37]; @symbol_param<1>_type<0> = [Number,89,41,47]; @symbol_param<2> = [d,89,49,50]; @symbol_param<2>_type<0> = [Number,89,54,60]; @symbol_return<0> = [Number,89,65,71]; ]
+    function dayOfYear(y as Number, m as Number, d as Number) as Number {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_89_72_95_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 90 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_89_72_95_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_89_72_95_4_stop" ]
+        %n.1 = local;
+        symbol [ n %n.1 90 12 13 ];
+        symbol [ CUM_DAYS %tmp.2 90 16 24 ];
+        %tmp.2 = getv ? :CUM_DAYS;
+        %tmp.3 = lgetv %m;
+        symbol [ m %tmp.3 90 25 26 ];
+        %tmp.4 = 1;
+        %tmp.5 = sub %tmp.3 %tmp.4;
+        %tmp.6 = agetv %tmp.2 %tmp.5;
+        %tmp.7 = lgetv %d;
+        symbol [ d %tmp.7 90 34 35 ];
+        %tmp.8 = add %tmp.6 %tmp.7;
+        lputv %n.1 %tmp.8;
+        symbol [ n %n.1 90 12 13 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 91 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_8_93_8_if_stmt:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_12_91_29_begin:
+        %tmp.9 = lgetv %m;
+        symbol [ m %tmp.9 91 12 13 ];
+        %tmp.10 = 2;
+        %tmp.11 = gt %tmp.9 %tmp.10;
+        bf %tmp.11 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_8_93_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_21_91_29_true:
+        %tmp.12 = self;
+        symbol [ isLeap %tmp.13 91 21 27 ];
+        %tmp.13 = getv function %tmp.12 :isLeap;
+        %tmp.14 = lgetv %y;
+        symbol [ y %tmp.14 91 28 29 ];
+        %tmp.15 = invoke %tmp.12 %tmp.13(%tmp.14);
+        push %tmp.15;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_21_91_29_end:
+        %tmp.16 = phi [%tmp.11 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_12_91_29_begin] [%tmp.15 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_21_91_29_true] [%tmp.16 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_21_91_29_end];
+        bf %tmp.16 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_8_93_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_8_93_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_32_93_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 92 12 ]
+        %tmp.17 = lgetv %n.1;
+        symbol [ n %tmp.17 92 12 13 ];
+        %tmp.18 = 1;
+        %tmp.19 = add %tmp.17 %tmp.18;
+        lputv %n.1 %tmp.19;
+        symbol [ n %n.1 92 12 13 ];
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_32_93_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_8_93_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_91_8_93_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 94 8 ]
+        %tmp.20 = lgetv %n.1;
+        symbol [ n %tmp.20 94 15 16 ];
+        ret %tmp.20;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_89_72_95_4_stop:
+    }
+    //! A year has 53 ISO weeks if it starts on Thursday,
+    //! or on Wednesday in a leap year.
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 99; @symbol_functiondef = [weeksInYear,99,13,24]; @symbol_param<0> = [y,99,25,26]; @symbol_param<0>_type<0> = [Number,99,30,36]; @symbol_return<0> = [Number,99,41,47]; ]
+    function weeksInYear(y as Number) as Number {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_99_48_102_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 100 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_99_48_102_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_99_48_102_4_stop" ]
+        %jan1.1 = local;
+        symbol [ jan1 %jan1.1 100 12 16 ];
+        %tmp.1 = self;
+        symbol [ isoDayOfWeek %tmp.2 100 19 31 ];
+        %tmp.2 = getv function %tmp.1 :isoDayOfWeek;
+        %tmp.3 = lgetv %y;
+        symbol [ y %tmp.3 100 32 33 ];
+        %tmp.4 = 1;
+        %tmp.5 = 1;
+        %tmp.6 = invoke %tmp.1 %tmp.2(%tmp.3, %tmp.4, %tmp.5);
+        lputv %jan1.1 %tmp.6;
+        symbol [ jan1 %jan1.1 100 12 16 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 101 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_begin:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_16_101_52_begin:
+        %tmp.7 = lgetv %jan1.1;
+        symbol [ jan1 %tmp.7 101 16 20 ];
+        %tmp.8 = 4;
+        %tmp.9 = eq %tmp.7 %tmp.8;
+        bt %tmp.9 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_true;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_29_101_52_false:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_30_101_51_begin:
+        %tmp.10 = lgetv %jan1.1;
+        symbol [ jan1 %tmp.10 101 30 34 ];
+        %tmp.11 = 3;
+        %tmp.12 = eq %tmp.10 %tmp.11;
+        bf %tmp.12 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_else_false;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_43_101_51_true:
+        %tmp.13 = self;
+        symbol [ isLeap %tmp.14 101 43 49 ];
+        %tmp.14 = getv function %tmp.13 :isLeap;
+        %tmp.15 = lgetv %y;
+        symbol [ y %tmp.15 101 50 51 ];
+        %tmp.16 = invoke %tmp.13 %tmp.14(%tmp.15);
+        push %tmp.16;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_43_101_51_end:
+        %tmp.17 = phi [%tmp.12 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_30_101_51_begin] [%tmp.16 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_43_101_51_true] [%tmp.17 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_43_101_51_end];
+        push %tmp.17;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_29_101_52_end:
+        %tmp.18 = phi [%tmp.9 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_16_101_52_begin] [%tmp.17 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_29_101_52_false] [%tmp.18 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_29_101_52_end];
+        bf %tmp.18 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_else_false;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_true:
+        %tmp.19 = 53;
+        push %tmp.19;
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_else_false:
+        %tmp.20 = 52;
+        push %tmp.20;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_end:
+        %tmp.21 = phi [%tmp.18 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_begin] [%tmp.19 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_true] [%tmp.20 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_else_false] [%tmp.21 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_101_15_101_62_end];
+        ret %tmp.21;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_99_48_102_4_stop:
+    }
+    //! ISO 8601 week number (1..53).
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 105; @symbol_functiondef = [isoWeek,105,13,20]; @symbol_param<0> = [y,105,21,22]; @symbol_param<0>_type<0> = [Number,105,26,32]; @symbol_param<1> = [m,105,34,35]; @symbol_param<1>_type<0> = [Number,105,39,45]; @symbol_param<2> = [d,105,47,48]; @symbol_param<2>_type<0> = [Number,105,52,58]; @symbol_return<0> = [Number,105,63,69]; ]
+    function isoWeek(y as Number, m as Number, d as Number) as Number {
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_105_70_114_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 106 8 ]
+        [ "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_105_70_114_4_start" "_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_105_70_114_4_stop" ]
+        %week.1 = local;
+        symbol [ week %week.1 106 12 16 ];
+        %tmp.1 = self;
+        symbol [ dayOfYear %tmp.2 106 20 29 ];
+        %tmp.2 = getv function %tmp.1 :dayOfYear;
+        %tmp.3 = lgetv %y;
+        symbol [ y %tmp.3 106 30 31 ];
+        %tmp.4 = lgetv %m;
+        symbol [ m %tmp.4 106 33 34 ];
+        %tmp.5 = lgetv %d;
+        symbol [ d %tmp.5 106 36 37 ];
+        %tmp.6 = invoke %tmp.1 %tmp.2(%tmp.3, %tmp.4, %tmp.5);
+        %tmp.7 = self;
+        symbol [ isoDayOfWeek %tmp.8 106 41 53 ];
+        %tmp.8 = getv function %tmp.7 :isoDayOfWeek;
+        %tmp.9 = lgetv %y;
+        symbol [ y %tmp.9 106 54 55 ];
+        %tmp.10 = lgetv %m;
+        symbol [ m %tmp.10 106 57 58 ];
+        %tmp.11 = lgetv %d;
+        symbol [ d %tmp.11 106 60 61 ];
+        %tmp.12 = invoke %tmp.7 %tmp.8(%tmp.9, %tmp.10, %tmp.11);
+        %tmp.13 = sub %tmp.6 %tmp.12;
+        %tmp.14 = 10;
+        %tmp.15 = add %tmp.13 %tmp.14;
+        %tmp.16 = 7;
+        %tmp.17 = div %tmp.15 %tmp.16;
+        lputv %week.1 %tmp.17;
+        symbol [ week %week.1 106 12 16 ];
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 107 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_107_8_109_8_if_stmt:
+        %tmp.18 = lgetv %week.1;
+        symbol [ week %tmp.18 107 12 16 ];
+        %tmp.19 = 1;
+        %tmp.20 = lt %tmp.18 %tmp.19;
+        bf %tmp.20 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_107_8_109_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_107_8_109_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_107_22_109_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 108 12 ]
+        %tmp.21 = self;
+        symbol [ weeksInYear %tmp.22 108 19 30 ];
+        %tmp.22 = getv function %tmp.21 :weeksInYear;
+        %tmp.23 = lgetv %y;
+        symbol [ y %tmp.23 108 31 32 ];
+        %tmp.24 = 1;
+        %tmp.25 = sub %tmp.23 %tmp.24;
+        %tmp.26 = invoke %tmp.21 %tmp.22(%tmp.25);
+        ret %tmp.26;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_107_22_109_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_107_8_109_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_107_8_109_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 110 8 ]
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_110_8_112_8_if_stmt:
+        %tmp.27 = lgetv %week.1;
+        symbol [ week %tmp.27 110 12 16 ];
+        %tmp.28 = self;
+        symbol [ weeksInYear %tmp.29 110 19 30 ];
+        %tmp.29 = getv function %tmp.28 :weeksInYear;
+        %tmp.30 = lgetv %y;
+        symbol [ y %tmp.30 110 31 32 ];
+        %tmp.31 = invoke %tmp.28 %tmp.29(%tmp.30);
+        %tmp.32 = gt %tmp.27 %tmp.31;
+        bf %tmp.32 @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_110_8_112_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_110_8_112_8_if_true:
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_110_35_112_8_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 111 12 ]
+        %tmp.33 = 1;
+        ret %tmp.33;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_110_35_112_8_stop:
+        goto @_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_110_8_112_8_if_end;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_110_8_112_8_if_end:
+[ "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc" 113 8 ]
+        %tmp.34 = lgetv %week.1;
+        symbol [ week %tmp.34 113 15 19 ];
+        ret %tmp.34;
+_Users_dageev_Documents_GARMIN_watch_source_domain_DateUtil_mc_105_70_114_4_stop:
+    }
+}
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/domain/DateUtil.mc"; @line = 1; ]
+<init> {
+}

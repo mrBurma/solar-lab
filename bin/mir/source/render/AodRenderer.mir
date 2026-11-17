@@ -1,0 +1,166 @@
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc"; @line = 1; @symbol_importdef<0> = [Toybox,1,7,13]; @symbol_importdef<1> = [Graphics,1,14,22]; ]
+import Toybox.Graphics;
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc"; @line = 2; @symbol_importdef<0> = [Toybox,2,7,13]; @symbol_importdef<1> = [Lang,2,14,18]; ]
+import Toybox.Lang;
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc"; @line = 3; @symbol_importdef<0> = [Toybox,3,7,13]; @symbol_importdef<1> = [System,3,14,20]; ]
+import Toybox.System;
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc"; @line = 4; @symbol_importdef<0> = [Toybox,4,7,13]; @symbol_importdef<1> = [Time,4,14,18]; @symbol_importdef<2> = [Gregorian,4,19,28]; ]
+import Toybox.Time.Gregorian;
+//! Always-on presentation of concept A. Rules for AMOLED low power:
+//! - black background, no sky, no arcs, no accent colours;
+//! - thin dimmed time and a short date only, well under 10 % of screen luminance;
+//! - the whole group shifts every minute (dx, dy) to prevent burn-in;
+//! - no seconds, no expensive calculations.
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc"; @line = 11; @symbol_moduledef = [AodRenderer,11,7,18]; ]
+module AodRenderer {
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc"; @line = 11; ]
+    <init> {
+    }
+    [ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc"; @line = 13; @symbol_functiondef = [draw,13,13,17]; @symbol_param<0> = [dc,13,18,20]; @symbol_param<0>_type<0> = [Dc,13,24,26]; @symbol_param<1> = [l,13,28,29]; @symbol_param<1>_type<0> = [LayoutManager,13,33,46]; @symbol_param<2> = [clock,13,48,53]; @symbol_param<2>_type<0> = [System,13,57,63]; @symbol_param<2>_type<1> = [ClockTime,13,64,73]; @symbol_param<3> = [date,14,18,22]; @symbol_param<3>_type<0> = [Gregorian,14,26,35]; @symbol_param<3>_type<1> = [Info,14,36,40]; @symbol_param<4> = [dx,14,42,44]; @symbol_param<4>_type<0> = [Number,14,48,54]; @symbol_param<5> = [dy,14,56,58]; @symbol_param<5>_type<0> = [Number,14,62,68]; ]
+    function draw(dc as Dc, l as LayoutManager, clock as System.ClockTime, date as Gregorian.Info, dx as Number, dy as Number) as Void {
+_Users_dageev_Documents_GARMIN_watch_source_render_AodRenderer_mc_14_78_26_4_start:
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc" 15 8 ]
+        %tmp.1 = lgetv %dc;
+        symbol [ dc %tmp.1 15 8 10 ];
+        symbol [ setColor %tmp.2 15 11 19 ];
+        %tmp.2 = getv function %tmp.1 :setColor;
+        symbol [ Graphics %tmp.3 15 20 28 ];
+        %tmp.3 = getm $.Toybox.Graphics;
+        symbol [ COLOR_BLACK %tmp.4 15 29 40 ];
+        %tmp.4 = getv %tmp.3 :COLOR_BLACK;
+        symbol [ Graphics %tmp.5 15 42 50 ];
+        %tmp.5 = getm $.Toybox.Graphics;
+        symbol [ COLOR_BLACK %tmp.6 15 51 62 ];
+        %tmp.6 = getv %tmp.5 :COLOR_BLACK;
+        invoke %tmp.1 %tmp.2(%tmp.4, %tmp.6);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc" 16 8 ]
+        %tmp.7 = lgetv %dc;
+        symbol [ dc %tmp.7 16 8 10 ];
+        symbol [ clear %tmp.8 16 11 16 ];
+        %tmp.8 = getv function %tmp.7 :clear;
+        invoke %tmp.7 %tmp.8();
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc" 18 8 ]
+        %tmp.9 = lgetv %dc;
+        symbol [ dc %tmp.9 18 8 10 ];
+        symbol [ setColor %tmp.10 18 11 19 ];
+        %tmp.10 = getv function %tmp.9 :setColor;
+        symbol [ Palette %tmp.12 18 20 27 ];
+        %tmp.12 = getv ? :Palette;
+        symbol [ AOD_DIM %tmp.13 18 28 35 ];
+        %tmp.13 = getv %tmp.12 :AOD_DIM;
+        symbol [ Graphics %tmp.14 18 37 45 ];
+        %tmp.14 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.15 18 46 63 ];
+        %tmp.15 = getv %tmp.14 :COLOR_TRANSPARENT;
+        invoke %tmp.9 %tmp.10(%tmp.13, %tmp.15);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc" 19 8 ]
+        %tmp.16 = lgetv %dc;
+        symbol [ dc %tmp.16 19 8 10 ];
+        symbol [ drawText %tmp.17 19 11 19 ];
+        %tmp.17 = getv function %tmp.16 :drawText;
+        %tmp.18 = lgetv %l;
+        symbol [ l %tmp.18 19 20 21 ];
+        symbol [ cx %tmp.19 19 22 24 ];
+        %tmp.19 = getv %tmp.18 :cx;
+        %tmp.20 = lgetv %dx;
+        symbol [ dx %tmp.20 19 27 29 ];
+        %tmp.21 = add %tmp.19 %tmp.20;
+        %tmp.22 = lgetv %l;
+        symbol [ l %tmp.22 19 31 32 ];
+        symbol [ aodDateY %tmp.23 19 33 41 ];
+        %tmp.23 = getv %tmp.22 :aodDateY;
+        %tmp.24 = lgetv %dy;
+        symbol [ dy %tmp.24 19 44 46 ];
+        %tmp.25 = add %tmp.23 %tmp.24;
+        %tmp.26 = lgetv %l;
+        symbol [ l %tmp.26 19 48 49 ];
+        symbol [ dateFont %tmp.27 19 50 58 ];
+        %tmp.27 = getv %tmp.26 :dateFont;
+        symbol [ DateUtil %tmp.29 19 60 68 ];
+        %tmp.29 = getv ? :DateUtil;
+        symbol [ dateShort %tmp.30 19 69 78 ];
+        %tmp.30 = getv function %tmp.29 :dateShort;
+        %tmp.31 = lgetv %date;
+        symbol [ date %tmp.31 19 79 83 ];
+        %tmp.32 = invoke %tmp.29 %tmp.30(%tmp.31);
+        symbol [ Graphics %tmp.33 20 12 20 ];
+        %tmp.33 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_CENTER %tmp.34 20 21 40 ];
+        %tmp.34 = getv %tmp.33 :TEXT_JUSTIFY_CENTER;
+        symbol [ Graphics %tmp.35 20 43 51 ];
+        %tmp.35 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.36 20 52 72 ];
+        %tmp.36 = getv %tmp.35 :TEXT_JUSTIFY_VCENTER;
+        %tmp.37 = bitor %tmp.34 %tmp.36;
+        invoke %tmp.16 %tmp.17(%tmp.21, %tmp.25, %tmp.27, %tmp.32, %tmp.37);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc" 22 8 ]
+        %tmp.38 = lgetv %dc;
+        symbol [ dc %tmp.38 22 8 10 ];
+        symbol [ setColor %tmp.39 22 11 19 ];
+        %tmp.39 = getv function %tmp.38 :setColor;
+        symbol [ Palette %tmp.41 22 20 27 ];
+        %tmp.41 = getv ? :Palette;
+        symbol [ AOD_TIME %tmp.42 22 28 36 ];
+        %tmp.42 = getv %tmp.41 :AOD_TIME;
+        symbol [ Graphics %tmp.43 22 38 46 ];
+        %tmp.43 = getm $.Toybox.Graphics;
+        symbol [ COLOR_TRANSPARENT %tmp.44 22 47 64 ];
+        %tmp.44 = getv %tmp.43 :COLOR_TRANSPARENT;
+        invoke %tmp.38 %tmp.39(%tmp.42, %tmp.44);
+[ "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc" 23 8 ]
+        %tmp.45 = lgetv %dc;
+        symbol [ dc %tmp.45 23 8 10 ];
+        symbol [ drawText %tmp.46 23 11 19 ];
+        %tmp.46 = getv function %tmp.45 :drawText;
+        %tmp.47 = lgetv %l;
+        symbol [ l %tmp.47 23 20 21 ];
+        symbol [ cx %tmp.48 23 22 24 ];
+        %tmp.48 = getv %tmp.47 :cx;
+        %tmp.49 = lgetv %dx;
+        symbol [ dx %tmp.49 23 27 29 ];
+        %tmp.50 = add %tmp.48 %tmp.49;
+        %tmp.51 = lgetv %l;
+        symbol [ l %tmp.51 23 31 32 ];
+        symbol [ timeY %tmp.52 23 33 38 ];
+        %tmp.52 = getv %tmp.51 :timeY;
+        %tmp.53 = lgetv %dy;
+        symbol [ dy %tmp.53 23 41 43 ];
+        %tmp.54 = add %tmp.52 %tmp.53;
+        %tmp.55 = lgetv %l;
+        symbol [ l %tmp.55 23 45 46 ];
+        symbol [ timeFont %tmp.56 23 47 55 ];
+        %tmp.56 = getv %tmp.55 :timeFont;
+        symbol [ DateUtil %tmp.58 24 12 20 ];
+        %tmp.58 = getv ? :DateUtil;
+        symbol [ hourString %tmp.59 24 21 31 ];
+        %tmp.59 = getv function %tmp.58 :hourString;
+        %tmp.60 = lgetv %clock;
+        symbol [ clock %tmp.60 24 32 37 ];
+        %tmp.61 = invoke %tmp.58 %tmp.59(%tmp.60);
+        %tmp.62 = ":";
+        %tmp.63 = add %tmp.61 %tmp.62;
+        %tmp.64 = lgetv %clock;
+        symbol [ clock %tmp.64 24 47 52 ];
+        symbol [ min %tmp.65 24 53 56 ];
+        %tmp.65 = getv %tmp.64 :min;
+        symbol [ format %tmp.66 24 57 63 ];
+        %tmp.66 = getv function %tmp.65 :format;
+        %tmp.67 = "%02d";
+        %tmp.68 = invoke %tmp.65 %tmp.66(%tmp.67);
+        %tmp.69 = add %tmp.63 %tmp.68;
+        symbol [ Graphics %tmp.70 25 12 20 ];
+        %tmp.70 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_CENTER %tmp.71 25 21 40 ];
+        %tmp.71 = getv %tmp.70 :TEXT_JUSTIFY_CENTER;
+        symbol [ Graphics %tmp.72 25 43 51 ];
+        %tmp.72 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_VCENTER %tmp.73 25 52 72 ];
+        %tmp.73 = getv %tmp.72 :TEXT_JUSTIFY_VCENTER;
+        %tmp.74 = bitor %tmp.71 %tmp.73;
+        invoke %tmp.45 %tmp.46(%tmp.50, %tmp.54, %tmp.56, %tmp.69, %tmp.74);
+_Users_dageev_Documents_GARMIN_watch_source_render_AodRenderer_mc_14_78_26_4_stop:
+    }
+}
+[ @file = "/Users/dageev/Documents/GARMIN/watch/source/render/AodRenderer.mc"; @line = 1; ]
+<init> {
+}
